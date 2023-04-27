@@ -1,13 +1,17 @@
 <template>
     <HeaderDashboard/>
+    <MainDashboardVue/>
 </template>
 
 <script>
 import HeaderDashboard from './Dashboard/HeaderDashboard.vue';
+import MainDashboardVue from './Dashboard/MainDashboard.vue';
+
+
     export default {
         name: 'Dashboard',
 
-        components: { HeaderDashboard }
+        components: { HeaderDashboard, MainDashboardVue }
     }
 </script>
 

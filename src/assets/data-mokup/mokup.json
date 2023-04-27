@@ -25,6 +25,28 @@
                 ]
             }
         },
+        "pie_chart": [
+            {
+                "name": "ARBITRUM",
+                "tot": 1234567,
+                "perc": 23.5
+            },
+            {
+                "name": "BSC",
+                "tot": 1234567,
+                "perc": 23.5
+            },
+            {
+                "name": "ETH",
+                "tot": 1234567,
+                "perc": 23.5
+            },
+            {
+                "name": "POLYGON",
+                "tot": 1234567,
+                "perc": 23.5
+            }
+        ],
         "detectors": [
             {
                 "name": "unprotected-write",
