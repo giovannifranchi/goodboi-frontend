@@ -1,0 +1,7 @@
+@use './partials/mixins' as *;
+@use './partials/reset' as *;
+@use './partials/variables' as *;
+
+body {
+    background-color: pink;
+}
