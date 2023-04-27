@@ -2,7 +2,7 @@
     <main>
         <div class="row">
             <div class="col-4">
-                <VueApexCharts :type="'pie'" :series="getSeries" :labels="getLabels" :options="pieOptions"/>
+                <VueApexCharts :type="'pie'" :series="getSeries"  :options="getOptions"/>
             </div>
         </div>
     </main>
@@ -19,23 +19,27 @@ import { store } from '../../store/store';
         components: {VueApexCharts}, 
 
         data(){
+            
             return {
                 store,
                 pieChart: store.mokup.pie_chart,
-                pieOptions: {
-                    dataLabels: {
-                        enabled: true,
-                    }
-                }
             }
         },
 
         computed: {
+
             getSeries(){
-                return this.pieChart.map((element)=> element.perc);
+                return this.pieChart.map((element)=> element.tot);
             },
-            getLabels(){
-                return this.pieChart.map((element)=> element.name);
+
+            getOptions(){
+                const pieLabels = this.pieChart.map((element)=> element.name);
+                return {
+                    labels: pieLabels,
+                    dataLabels: {
+                        enabled: true,
+                    }
+                }
             }
         }
     }
