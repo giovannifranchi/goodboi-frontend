@@ -1,12 +1,13 @@
 <template>
     <div>
-        authentication
+        Authentication
     </div>
 </template>
 
 <script>
     export default {
         name: 'Authentication',
+
     }
 </script>
 
