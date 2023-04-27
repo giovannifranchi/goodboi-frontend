@@ -8,7 +8,6 @@ import Home from './views/Home.vue';
 </script>
 
 <template>
-  <h1>Goodboi Frontend</h1>
   <Home/>
 </template>
 
