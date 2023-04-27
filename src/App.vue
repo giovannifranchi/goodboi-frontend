@@ -1,15 +1,11 @@
 <script>
-  import HelloApp from './components/HelloApp.vue';
-  export default {
-    name: 'App',
-    components: {
-      HelloApp,
-    }
+  export default{
+    name: 'App'
   }
 </script>
 
 <template>
-  <HelloApp/>
+  <h1>Goodboi Frontend</h1>
 </template>
 
 
