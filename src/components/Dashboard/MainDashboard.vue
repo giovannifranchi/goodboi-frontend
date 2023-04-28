@@ -13,6 +13,12 @@
           />
         </div>
       </div>
+
+      <div class="row">
+        <div class="col">
+            <AnalyticsTableComponent :info="getTables"/>
+        </div>
+      </div>
     </div>
   </main>
 </template>
@@ -21,11 +27,12 @@
 import { store } from "../../store/store";
 import StatsComponentVue from "../general/StatsComponent.vue";
 import DetectorComponent from "../general/DetectorComponent.vue";
+import AnalyticsTableComponent from "../general/AnalyticsTableComponent.vue";
 
 export default {
   name: "MainDashboard",
 
-  components: { StatsComponentVue, DetectorComponent },
+  components: { StatsComponentVue, DetectorComponent, AnalyticsTableComponent },
 
   data() {
     return {
@@ -38,6 +45,10 @@ export default {
     getDetectors() {
       return store.mokup.detectors;
     },
+
+    getTables(){
+        return store.mokup.tableRows;
+    }
   },
 
   methods: {
