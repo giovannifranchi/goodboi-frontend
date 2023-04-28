@@ -3,10 +3,10 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>ID</th>
+          <th class="id">ID</th>
           <th>ADDRESS</th>
           <th>CHAIN</th>
-          <th>REPORT</th>
+          <th class="record">REPORT</th>
           <th>FLAGS</th>
           <th>LAST TX</th>
           <th>AN DATE</th>
@@ -16,10 +16,11 @@
       </thead>
       <tbody>
         <tr v-for="(row, index) in info" :key="index">
-          <td>{{ row.ID }}</td>
-          <td>{{ row.address }}</td>
+          <td class="id">{{ row.ID }}</td>
+          <td>{{ renderContract(row.address) }}</td>
           <td>{{ row.chain }}</td>
-          <td>{{ row["rep_load-not-store"] }}</td>
+          <td class="record">{{ row["rep_load-not-store"] }}</td>
+          <td>Flags</td>
           <td>{{ row.lastTX }}</td>
           <td>{{ row.anDate }}</td>
           <td><a href="#">go to action</a></td>
@@ -43,6 +44,14 @@ export default {
       required: true,
     },
   },
+
+  methods: {
+    renderContract(contract){
+        const start = contract.substring(0,5);
+        const end = contract.substring(contract.length - 4);
+        return `${start}...${end}`;
+    }
+  }
 };
 </script>
 
@@ -57,7 +66,17 @@ export default {
     td {
       white-space: normal;
       word-wrap: break-word;
-      overflow-wrap: break-word; 
+      overflow-wrap: break-word;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    .record{
+        width: 30%;
+    }
+
+    .id {
+        width: auto;
     }
   
 }

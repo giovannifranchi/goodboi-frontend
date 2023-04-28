@@ -1,11 +1,11 @@
 <template>
   <div v-if="!tableShow">
-    <div class="row">
+    <div class="row pb-5">
       <div class="col-4">
         <VueApexCharts :type="'pie'" :series="getSeries" :options="getOptions" />
       </div>
     </div>
-    <div class="row">
+    <div class="row pb-3">
       <div class="col-4">
         <ContractsComponent
           :contractsNumber="store.mokup.general.totalContracts"
@@ -13,7 +13,7 @@
         />
       </div>
     </div>
-    <div class="row">
+    <div class="row mb-3">
       <div class="col-4 d-flex gap-3">
         <h4>
           <span class="badge text-bg-danger">Errors: {{ store.mokup.general.analysisErrors.percentage }}%</span>
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div class="row" v-else>
+  <div class="row mb-3" v-else>
     <div class="col-4">
       <ErrorTableComponent :errorDetails="store.mokup.general.analysisErrors.details" />
       <button type="button" class="btn btn-light" @click="tableShow = false">HIDE TABLE</button>

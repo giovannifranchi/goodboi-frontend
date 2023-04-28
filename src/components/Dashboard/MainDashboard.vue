@@ -1,9 +1,9 @@
 <template>
   <main>
     <div class="container">
-      <StatsComponentVue />
+      <StatsComponentVue  class="py-5"/>
 
-      <div class="row">
+      <div class="row py-5">
         <div class="col-3" v-for="(detector, index) in getDetectors" :key="index">
           <DetectorComponent
             :detectorName="detector.name"
@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row py-3">
         <div class="col">
             <AnalyticsTableComponent :info="getTables"/>
         </div>
