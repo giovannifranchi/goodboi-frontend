@@ -1,7 +1,6 @@
 <template>
     <Autentication v-if="currentPage === 0"/> <!-- TODO: it has to be changed with v-if="!user" -->
     <Dashborad v-else/>
-    <button class="btn btn-primary" type="button" @click="changePage">change</button>
 </template>
 
 <script>
