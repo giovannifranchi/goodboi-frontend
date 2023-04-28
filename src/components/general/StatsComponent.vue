@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!tableShow">
+  <div>
     <div class="row pb-5">
       <div class="col-4">
         <VueApexCharts :type="'pie'" :series="getSeries" :options="getOptions" />
@@ -18,15 +18,19 @@
         <h4>
           <span class="badge text-bg-danger">Errors: {{ store.mokup.general.analysisErrors.percentage }}%</span>
         </h4>
-        <button type="button" class="btn btn-light" @click="tableShow = true">SEE MORE</button>
+        <button type="button" class="btn btn-light" @click="showTable">SEE MORE</button>
       </div>
     </div>
   </div>
 
-  <div class="row mb-3" v-else>
+  <!-- <div class="row mb-3" :class="tableShow ? 'show' : 'hide'">
     <div class="col-4">
+      <ErrorTableComponent :errorDetails="store.mokup.general.analysisErrors.details"/>
+    </div>
+  </div> -->
+  <div class="my-row mb-3" :class="tableShow ? 'show' : 'hide'">
+    <div>
       <ErrorTableComponent :errorDetails="store.mokup.general.analysisErrors.details" />
-      <button type="button" class="btn btn-light" @click="tableShow = false">HIDE TABLE</button>
     </div>
   </div>
 </template>
@@ -68,14 +72,24 @@ export default {
 
   methods: {
     showTable() {
-      this.tableShow = true;
-    },
-
-    hideTable() {
-      this.tableShow = false;
+      this.tableShow ? this.tableShow = false : this.tableShow = true;
     },
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.show {
+  height: auto;
+  transform-origin: top;
+  transform: scaleY(1);
+  transition: transform 0.4s ease-in-out;
+}
+
+.hide {
+  height: 0;
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 0.4s ease-in-out;
+}
+</style>
