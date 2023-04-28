@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!tableShow">
     <div class="row">
       <div class="col-4">
         <VueApexCharts :type="'pie'" :series="getSeries" :options="getOptions" />
@@ -18,12 +18,12 @@
         <h4>
           <span class="badge text-bg-danger">Errors: {{ store.mokup.general.analysisErrors.percentage }}%</span>
         </h4>
-        <button type="button" class="btn btn-light" @click="tableShow = true" v-if="!tableShow">SEE MORE</button>
+        <button type="button" class="btn btn-light" @click="tableShow = true">SEE MORE</button>
       </div>
     </div>
   </div>
 
-  <div class="row" v-if="tableShow">
+  <div class="row" v-else>
     <div class="col-4">
       <ErrorTableComponent :errorDetails="store.mokup.general.analysisErrors.details" />
       <button type="button" class="btn btn-light" @click="tableShow = false">HIDE TABLE</button>
