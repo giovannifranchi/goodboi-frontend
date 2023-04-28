@@ -2,7 +2,7 @@
     "mokup": {
         "general": {
             "totalContracts": 12345678,
-            "24hContracts": 10123,
+            "Contracts24h": 10123,
             "analysisErrors": {
                 "percentage": 2.3,
                 "details": [
