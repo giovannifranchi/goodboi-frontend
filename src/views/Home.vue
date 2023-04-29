@@ -15,7 +15,7 @@ import Dashborad from '../components/Dashborad.vue';
 
         data(){
             return {
-                currentPage: 1,
+                currentPage: 0,
                 isUser: false,
             }
         },
