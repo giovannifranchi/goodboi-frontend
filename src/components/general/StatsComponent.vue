@@ -1,32 +1,18 @@
 <template>
-  <div>
-    <div class="row pb-5">
-      <div class="col-4">
-        <VueApexCharts :type="'pie'" :series="getSeries" :options="getOptions" />
-      </div>
-    </div>
-    <div class="row pb-3">
-      <div class="col-4">
-        <ContractsComponent
-          :contractsNumber="store.mokup.general.totalContracts"
-          :contracts24Number="store.mokup.general.Contracts24h"
-        />
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="col-4 d-flex gap-3">
-        <button type="button" class="btn btn-danger" @click="showTable">Errors: {{ store.mokup.general.analysisErrors.percentage }}%</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- <div class="row mb-3" :class="tableShow ? 'show' : 'hide'">
+  <div class="row py-5 position-relative overflow-hidden">
     <div class="col-4">
-      <ErrorTableComponent :errorDetails="store.mokup.general.analysisErrors.details"/>
+      <VueApexCharts :type="'pie'" :series="getSeries" :options="getOptions" />
     </div>
-  </div> -->
-  <div class="my-row mb-3" :class="tableShow ? 'show' : 'hide'">
-    <div>
+    <div class="col-4">
+      <ContractsComponent
+        :contractsNumber="store.mokup.general.totalContracts"
+        :contracts24Number="store.mokup.general.Contracts24h"
+      />
+      <button type="button" class="btn btn-danger" @click="showTable">
+        Errors: {{ store.mokup.general.analysisErrors.percentage }}%
+      </button>
+    </div>
+    <div class="col-4 position-absolute" :class="tableShow ? 'show' : 'hide'">
       <ErrorTableComponent :errorDetails="store.mokup.general.analysisErrors.details" />
     </div>
   </div>
@@ -63,13 +49,16 @@ export default {
         dataLabels: {
           enabled: true,
         },
+        legend: {
+          show: false
+        } 
       };
     },
   },
 
   methods: {
     showTable() {
-      this.tableShow ? this.tableShow = false : this.tableShow = true;
+      this.tableShow ? (this.tableShow = false) : (this.tableShow = true);
     },
   },
 };
@@ -77,16 +66,14 @@ export default {
 
 <style lang="scss" scoped>
 .show {
-  height: auto;
-  transform-origin: bottom;
-  transform: scaleY(1);
-  transition: transform 0.4s ease-in;
+  right: 0;
+  opacity: 1;
+  transition: all .4s ease-in-out;
 }
 
 .hide {
-  height: 0;
-  transform-origin: top;
-  transform: scaleY(0);
-  transition: transform 0.4s ease-out;
+  right: -100%;
+  opacity: 0;
+  transition: all .7s ease-in-out;
 }
 </style>
