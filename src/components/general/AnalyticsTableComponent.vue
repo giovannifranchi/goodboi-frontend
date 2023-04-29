@@ -20,13 +20,32 @@
           <td>{{ renderContract(row.address) }}</td>
           <td>{{ row.chain }}</td>
           <td class="record">{{ row["rep_load-not-store"] }}</td>
-          <td>Flags</td>
-          <td>{{ row.lastTX }}</td>
-          <td>{{ row.anDate }}</td>
-          <td><a href="#">go to action</a></td>
           <td>
-            <button type="button" class="btn btn-success">True Positive</button>
-            <button type="button" class="btn btn-danger">False Positive</button>
+            <div class="d-flex flex-column">
+              <span>{{ getPF(row.PF, row.RPF) }}</span>
+              <span>{{ getBF(row.BF, row.RBF) }}</span>
+            </div>
+          </td>
+          <td class="text-start">
+            <div class="d-flex flex-column">
+              <span>D: {{ handleDate(row.lastTX) }}</span>
+              <span>T: {{ handleTime(row.lastTX) }}</span>
+            </div>
+          </td>
+          <td class="text-start">
+            <div class="d-flex flex-column">
+              <span>D: {{ handleDate(row.anDate) }}</span>
+              <span>T: {{ handleTime(row.anDate) }}</span>
+            </div>
+          </td>
+          <td>
+            <div class="d-flex flex-column">
+              <span>Go to <a href="#">scanner</a></span>
+              <span>Go to <a href="#">neth.net</a></span>
+            </div>
+          </td>
+          <td>
+            <ManualReviewComponent/>
           </td>
         </tr>
       </tbody>
@@ -35,6 +54,9 @@
 </template>
 
 <script>
+import ManualReviewComponent from './ManualReviewComponent.vue';
+
+
 export default {
   name: "AnalyticsTableComponent",
 
@@ -45,13 +67,44 @@ export default {
     },
   },
 
-  methods: {
-    renderContract(contract){
-        const start = contract.substring(0,5);
-        const end = contract.substring(contract.length - 4);
-        return `${start}...${end}`;
+  components: {ManualReviewComponent},
+
+  data(){
+    return {
+        showTPButtons: false,
     }
-  }
+  },
+
+  methods: {
+    renderContract(contract) {
+      const start = contract.substring(0, 5);
+      const end = contract.substring(contract.length - 3);
+      return `${start}...${end}`;
+    },
+
+    getPF(pf, rpf) {
+      const values = [];
+      pf ? values.push("PF") : null;
+      rpf ? values.push("RPF") : null;
+      return values.join(", ");
+    },
+
+    getBF(bf, rbf) {
+      const values = [];
+      bf ? values.push("BF") : null;
+      rbf ? values.push("RBF") : null;
+      return values.join(", ");
+    },
+
+    handleDate(myDate) {
+      const handledDate = myDate.slice(0, 10);
+      return handledDate.slice(2);
+    },
+
+    handleTime(myDate) {
+      return myDate.slice(11, 19);
+    },
+  },
 };
 </script>
 
@@ -60,24 +113,23 @@ export default {
   width: 100%;
   table {
     width: 100%;
-    table-layout: fixed; 
+    table-layout: fixed;
   }
-   th,
-    td {
-      white-space: normal;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      vertical-align: middle;
-      text-align: center;
-    }
+  th,
+  td {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    vertical-align: middle;
+    text-align: center;
+  }
 
-    .record{
-        width: 30%;
-    }
+  .record {
+    width: 30%;
+  }
 
-    .id {
-        width: auto;
-    }
-  
+  .id {
+    width: auto;
+  }
 }
 </style>
