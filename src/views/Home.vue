@@ -1,10 +1,11 @@
 <template>
-    <Autentication v-if="currentPage === 0"/> <!-- TODO: it has to be changed with v-if="!user" -->
+    <Autentication v-if="getAuthToken === undefined || getAuthToken === null"/> <!-- TODO: it has to be changed with v-if="!user" -->
     <Dashborad v-else/>
 </template>
 
 <script>
-import axios from 'axios';
+
+import { mapGetters } from 'vuex';
 import Autentication from '../components/Autentication.vue';
 import Dashborad from '../components/Dashborad.vue';
 
@@ -20,23 +21,9 @@ import Dashborad from '../components/Dashborad.vue';
             }
         },
 
-        methods: {
-            changePage(){
-                this.currentPage === 0 ? this.currentPage = 1 : this.currentPage = 0;
-            }
+        computed: {
+            ...mapGetters(["getAuthToken"])
         },
-
-        // This is going to be the authentication call
-        // async created(){
-        //     try{
-        //         const result = await axios.post()
-        //         this.isUser = true
-        //     }catch {
-        //         this.isUser = false;
-                
-        //     }
-        // }
-
 
     }
 </script>

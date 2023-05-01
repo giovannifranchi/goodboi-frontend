@@ -2,7 +2,7 @@
   <div class="d-flex align-items-center justify-content-center wrapper flex-column">
     <!-- <AutoTypingComponent /> -->
     <h1 class="mb-5">GoodBoi</h1>
-    <form @submit.prevent="login">
+    <form @submit.prevent="logintry(query)">
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Email address</label>
         <input
@@ -10,19 +10,21 @@
           class="form-control"
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
-          v-model="username"
+          v-model="query.username"
         />
       </div>
       <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" v-model="password" />
+        <input type="password" class="form-control" id="exampleInputPassword1" v-model="query.password" />
       </div>
       <button type="submit" class="btn btn-primary">login</button>
+      <div>{{ getAuthToken }}</div>
     </form>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 import AutoTypingComponent from "./AutoTypingComponent.vue";
 import axios from "axios";
 
@@ -33,34 +35,25 @@ export default {
 
   data() {
     return {
-      username: "",
-      password: "",
-      authToken: null
+      query: {
+        username: '',
+        password: '',
+      }
     };
   },
 
+  computed: {
+    ...mapGetters(['getAuthToken'])
+  },
+
   methods: {
-    login() {
-      const endpoint = "http://65.108.85.188:3000/api/login";
+    ...mapActions(['login']),
 
-      const payload = {
-        username: this.username,
-        password: this.password,
-      };
+    logintry(query){ //TODO: refactoring required for semantic names and optimization
+      
+      this.login(query);
+    }
 
-      const headers = {
-        "Content-Type": "application/x-www-form-urlencoded"
-      };
-
-      axios.post(endpoint,payload, {headers}).then((result) => {
-        this.authToken = result.data.token;
-        this.username = '';
-        this.password = '';
-      });
-
-
-
-    },
   },
 };
 </script>
