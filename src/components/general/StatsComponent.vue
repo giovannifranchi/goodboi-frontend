@@ -2,6 +2,7 @@
   <div class="row py-5 position-relative overflow-hidden">
     <div class="col-4">
       <VueApexCharts :type="'pie'" :series="getSeries" :options="getOptions" />
+      
     </div>
     <div class="col-4">
       <ContractsComponent
@@ -23,6 +24,7 @@ import { store } from "../../store/store";
 import VueApexCharts from "vue3-apexcharts";
 import ContractsComponent from "./ContractsComponent.vue";
 import ErrorTableComponent from "./ErrorTableComponent.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "StatsComponent",
@@ -38,12 +40,22 @@ export default {
   },
 
   computed: {
+    ...mapGetters(["getContracts"]),
+
+
     getSeries() {
-      return this.pieChart.map((element) => element.tot);
+      const numbers = [];
+      for(let contract in this.getContracts){
+        numbers.push(this.getContracts[contract]);
+      }
+      return numbers;
     },
 
     getOptions() {
-      const pieLabels = this.pieChart.map((element) => element.name);
+      const pieLabels = [];
+      for(let contract in this.getContracts){
+        pieLabels.push(contract)
+      }
       return {
         labels: pieLabels,
         dataLabels: {
@@ -57,10 +69,16 @@ export default {
   },
 
   methods: {
+    ...mapActions(["fetchContracts"]),
+
     showTable() {
       this.tableShow ? (this.tableShow = false) : (this.tableShow = true);
     },
   },
+
+  created(){
+    this.fetchContracts();
+  }
 };
 </script>
 

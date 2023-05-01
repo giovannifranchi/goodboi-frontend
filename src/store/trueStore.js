@@ -64,7 +64,7 @@ const store = createStore({
     },
     actions: {
 
-        login({ commit }, query){
+        login({ commit }, query){  //TODO: refactoring required, all enpoints need to be in a .env file
             let authToken = null;
             const endpoint = "http://65.108.85.188:3000/api/login";
             const headers = {
@@ -74,11 +74,28 @@ const store = createStore({
                 username: query.username,
                 password: query.password,
             }
-            console.log('login started')
             axios.post(endpoint, payload, {headers})
             .then((result)=> {
                 authToken = result.data.token;
                 commit('setAuthToken', authToken);
+            })
+        },
+
+        fetchContracts({commit}){
+            let contracts = null;
+
+            const endpoint =  'http://65.108.85.188:3000/api/contracts';
+
+            const headers = {
+                'Accept': 'application/json',
+                "Content-Type": "multipart/form-data",
+                'authtoken': this.state.user.authToken,
+            }
+
+            axios.get(endpoint, {headers})
+            .then((result)=>{
+                contracts = result.data;
+                commit("setContracts", contracts);
             })
         }
         
