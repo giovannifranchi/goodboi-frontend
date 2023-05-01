@@ -1,7 +1,28 @@
 <template>
   <main>
     <div class="container">
-      <StatsComponentVue  class="py-5"/>
+      <StatsComponentVue class="py-5" />
+
+      <!-- Rev State radios -->
+      <h3>Revision State</h3>
+      <div class="row row-cols-5">
+        <div class="col" v-for="(radio, index) in 5" :key="index">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              :id="`rev${index}`"
+              :checked="index === 0"
+              v-model="revState"
+              :value="index"
+              @change="fetchDetectors(revState)"
+            />
+            <label class="form-check-label" :for="`rev${index}`">{{ index }}</label>
+          </div>
+        </div>
+      </div>
+      <!-- TODOs: add a spinner component also here to handle the lag in fetchDetectors call ath radio button change -->
 
       <div class="row py-5">
         <div class="col-3" v-for="(detector, index) in getDetectors" :key="index">
@@ -16,7 +37,7 @@
 
       <div class="row py-3">
         <div class="col">
-            <AnalyticsTableComponent :info="getTables"/>
+          <AnalyticsTableComponent :info="getTables" />
         </div>
       </div>
     </div>
@@ -39,31 +60,29 @@ export default {
     return {
       store,
       currentDetector: store.mokup.detectors[0].name,
+      revState: 0,
     };
   },
 
   computed: {
-
     ...mapGetters(["getDetectors"]),
 
-
-    getTables(){
-        return store.mokup.tableRows;
-    }
+    getTables() {
+      return store.mokup.tableRows;
+    },
   },
 
   methods: {
     ...mapActions(["fetchDetectors"]),
 
-    handleDetector(detectorName){
-        this.currentDetector = detectorName;
-        console.log(detectorName);
-    }
+    handleDetector(detectorName) {
+      this.currentDetector = detectorName;
+    },
   },
 
-  created(){
-    this.fetchDetectors();
-  }
+  created() {
+    this.fetchDetectors(this.revState);
+  },
 };
 </script>
 

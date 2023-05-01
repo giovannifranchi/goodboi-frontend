@@ -145,10 +145,10 @@ const store = createStore({
 
         },
 
-        fetchDetectors({commit}){
+        fetchDetectors({commit}, query){
             let detectors = null;
 
-            const endpoint = 'http://65.108.85.188:3000/api/detectors/:revState';
+            const endpoint = `http://65.108.85.188:3000/api/detectors/${query}`;
 
             const headers = {
                 'Accept': 'application/json',
