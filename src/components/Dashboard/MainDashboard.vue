@@ -28,6 +28,7 @@ import { store } from "../../store/store";
 import StatsComponentVue from "../general/StatsComponent.vue";
 import DetectorComponent from "../general/DetectorComponent.vue";
 import AnalyticsTableComponent from "../general/AnalyticsTableComponent.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "MainDashboard",
@@ -42,9 +43,9 @@ export default {
   },
 
   computed: {
-    getDetectors() {
-      return store.mokup.detectors;
-    },
+
+    ...mapGetters(["getDetectors"]),
+
 
     getTables(){
         return store.mokup.tableRows;
@@ -52,10 +53,16 @@ export default {
   },
 
   methods: {
+    ...mapActions(["fetchDetectors"]),
+
     handleDetector(detectorName){
         this.currentDetector = detectorName;
         console.log(detectorName);
     }
+  },
+
+  created(){
+    this.fetchDetectors();
   }
 };
 </script>

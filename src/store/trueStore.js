@@ -11,6 +11,7 @@ const store = createStore({
             contracts: null,
             contracts24: null,
             compilationErrors: null,
+            detectors: null,
             tables: null
         }
     },
@@ -31,6 +32,10 @@ const store = createStore({
 
         getCompilationErrors(state){
             return state.user.compilationErrors;
+        },
+
+        getDetectors(state){
+            return state.user.detectors;
         },
 
         getTables(state){
@@ -55,6 +60,10 @@ const store = createStore({
 
         setCompilationErrors(state, value){
             state.user.compilationErrors = value;
+        },
+
+        setDetectors(state, value){
+            state.user.detectors = value;
         },
 
         setTables(state, value){
@@ -134,6 +143,24 @@ const store = createStore({
                 commit("setCompilationErrors", compilationErrors);
             })
 
+        },
+
+        fetchDetectors({commit}){
+            let detectors = null;
+
+            const endpoint = 'http://65.108.85.188:3000/api/detectors/:revState';
+
+            const headers = {
+                'Accept': 'application/json',
+                "Content-Type": "multipart/form-data",
+                'authtoken': this.state.user.authToken,
+            }
+
+            axios.get(endpoint, {headers})
+            .then((result)=> {
+                detectors = result.data;
+                commit("setDetectors", detectors);
+            })
         }
         
     }
