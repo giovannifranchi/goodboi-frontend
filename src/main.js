@@ -2,11 +2,11 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import './assets/index-js/index'
 import VueApexCharts from 'vue3-apexcharts';
-import trueStore from './store/trueStore';
+import store from './store/store';
 
 
 createApp(App)
-.use(trueStore)
+.use(store)
 .component('VueApexCharts', VueApexCharts)
 .mount('#app')
 

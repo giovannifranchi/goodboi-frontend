@@ -1,11 +1,190 @@
-//This is a temporary store to handle hardcoded data sets
+import { createStore } from "vuex";
 
-import { reactive } from "vue";
+import axios from "axios";
 
-import { mokup } from '../assets/data-mokup/mokup.json';
+const store = createStore({
 
+    state:{
 
+        user: {
+            authToken: null,
+            contracts: null,
+            contracts24: null,
+            compilationErrors: null,
+            detectors: null,
+            tables: null
+        }
+    },
 
-export const store = reactive({
-    mokup,
-});
+    getters: {
+
+        getAuthToken(state){
+            return state.user.authToken;
+        },
+
+        getContracts(state){
+            return state.user.contracts;
+        },
+
+        getContracts24(state){
+            return state.user.contracts24;
+        },
+
+        getCompilationErrors(state){
+            return state.user.compilationErrors;
+        },
+
+        getDetectors(state){
+            return state.user.detectors;
+        },
+
+        getTables(state){
+            return state.user.tables;
+        }
+
+    },
+
+    mutations: {
+
+        setAuthToken(state, value){
+            state.user.authToken = value;
+        },
+
+        setContracts(state, value){
+            state.user.contracts = value;
+        },
+
+        setContracts24(state, value){
+            state.user.contracts24 = value;
+        },
+
+        setCompilationErrors(state, value){
+            state.user.compilationErrors = value;
+        },
+
+        setDetectors(state, value){
+            state.user.detectors = value;
+        },
+
+        setTables(state, value){
+            state.user.tables = value;
+        }
+
+    },
+    actions: {
+
+        login({ commit }, query){  //TODO: refactoring required, all enpoints need to be in a .env file
+            let authToken = null;
+            const endpoint = "http://65.108.85.188:3000/api/login";
+            const headers = {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+            const payload = {
+                username: query.username,
+                password: query.password,
+            }
+            axios.post(endpoint, payload, {headers})
+            .then((result)=> {
+                authToken = result.data.token;
+                commit('setAuthToken', authToken);
+            })
+        },
+
+        fetchContracts({commit}){
+            let contracts = null;
+
+            const endpoint =  'http://65.108.85.188:3000/api/contracts';
+
+            const headers = {
+                'Accept': 'application/json',
+                "Content-Type": "multipart/form-data",
+                'authtoken': this.state.user.authToken,
+            }
+
+            axios.get(endpoint, {headers})
+            .then((result)=>{
+                contracts = result.data;
+                commit("setContracts", contracts);
+            })
+        },
+
+        fetchContracts24({commit}){
+            let contracts = null;
+
+            const endpoint = 'http://65.108.85.188:3000/api/contracts24h';
+
+            const headers = {
+                'Accept': 'application/json',
+                "Content-Type": "multipart/form-data",
+                'authtoken': this.state.user.authToken,
+            }
+
+            axios.get(endpoint, {headers})
+            .then((result)=>{
+                contracts = result.data.count;
+                commit("setContracts24", contracts);
+            })
+        },
+
+        fetchCompilationErrors({commit}){
+            let compilationErrors = null;
+
+            const endpoint = 'http://65.108.85.188:3000/api/compilationErrors';
+
+            const headers = {
+                'Accept': 'application/json',
+                "Content-Type": "multipart/form-data",
+                'authtoken': this.state.user.authToken,
+            }
+
+            axios.get(endpoint, {headers})
+            .then((result)=>{
+                compilationErrors = result.data;
+                commit("setCompilationErrors", compilationErrors);
+            })
+
+        },
+
+        fetchDetectors({commit}, query){
+            let detectors = null;
+
+            const endpoint = `http://65.108.85.188:3000/api/detectors/${query}`;
+
+            const headers = {
+                'Accept': 'application/json',
+                "Content-Type": "multipart/form-data",
+                'authtoken': this.state.user.authToken,
+            }
+
+            axios.get(endpoint, {headers})
+            .then((result)=> {
+                detectors = result.data;
+                commit("setDetectors", detectors);
+            })
+        },
+
+        fetchTables({commit}, query){
+
+            let tables = null;
+
+            const endpoint = `http://65.108.85.188:3000/api/hits/${query.detector}/${query.revState}/${query.offset}`;
+
+            const headers = {
+                'Accept': 'application/json',
+                "Content-Type": "multipart/form-data",
+                'authtoken': this.state.user.authToken,
+            }
+
+            axios.get(endpoint, {headers})
+            .then((result)=> {
+                tables = result.data;
+                commit("setTables", tables);
+            })
+
+        }
+        
+    }
+
+})
+
+export default store
