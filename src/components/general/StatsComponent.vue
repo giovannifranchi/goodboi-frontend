@@ -16,6 +16,8 @@
 </template>
 
 <script>
+// TODOS: add a spinner component and as long as the getters return 0 leave the spinner
+
 import VueApexCharts from "vue3-apexcharts";
 import ContractsComponent from "./ContractsComponent.vue";
 import ErrorTableComponent from "./ErrorTableComponent.vue";
