@@ -9,7 +9,7 @@
     </thead>
     <tbody>
         <tr v-for="(error, index) in errorDetails" :key="index">
-            <td>{{ error.name }}</td>
+            <td>{{ error.error }}</td>
             <td>{{ error.count }}</td>
         </tr>
     </tbody>

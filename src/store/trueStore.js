@@ -97,6 +97,43 @@ const store = createStore({
                 contracts = result.data;
                 commit("setContracts", contracts);
             })
+        },
+
+        fetchContracts24({commit}){
+            let contracts = null;
+
+            const endpoint = 'http://65.108.85.188:3000/api/contracts24h';
+
+            const headers = {
+                'Accept': 'application/json',
+                "Content-Type": "multipart/form-data",
+                'authtoken': this.state.user.authToken,
+            }
+
+            axios.get(endpoint, {headers})
+            .then((result)=>{
+                contracts = result.data.count;
+                commit("setContracts24", contracts);
+            })
+        },
+
+        fetchCompilationErrors({commit}){
+            let compilationErrors = null;
+
+            const endpoint = 'http://65.108.85.188:3000/api/compilationErrors';
+
+            const headers = {
+                'Accept': 'application/json',
+                "Content-Type": "multipart/form-data",
+                'authtoken': this.state.user.authToken,
+            }
+
+            axios.get(endpoint, {headers})
+            .then((result)=>{
+                compilationErrors = result.data;
+                commit("setCompilationErrors", compilationErrors);
+            })
+
         }
         
     }
