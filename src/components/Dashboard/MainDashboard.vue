@@ -30,12 +30,11 @@
             :detectorName="detector.name"
             :detectorCount="detector.count"
             @handleClick="handleDetector"
-            @click="fetchTables({detector: this.currentDetector, revState: this.revState, offset: 0})"
+            @click="fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 })"
             :class="currentDetector === detector.name ? 'active' : ''"
           />
         </div>
       </div>
-
 
       <div class="row py-3">
         <div class="col">
@@ -47,7 +46,6 @@
 </template>
 
 <script>
-
 import StatsComponentVue from "../general/StatsComponent.vue";
 import DetectorComponent from "../general/DetectorComponent.vue";
 import AnalyticsTableComponent from "../general/AnalyticsTableComponent.vue";
@@ -60,14 +58,13 @@ export default {
 
   data() {
     return {
-      currentDetector: 'unprotected-write',
+      currentDetector: "unprotected-write",
       revState: 0,
     };
   },
 
   computed: {
     ...mapGetters(["getDetectors", "getTables"]),
-
   },
 
   methods: {
@@ -77,18 +74,15 @@ export default {
       this.currentDetector = detectorName;
     },
 
-    logQuery(query){
+    logQuery(query) {
       console.log(query.detector, query.revState);
-    }
+    },
   },
 
-async created() {
-   await this.fetchDetectors(this.revState);
+  async created() {
+    await this.fetchDetectors(this.revState);
+    await this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 });
   },
-
-  mounted(){
-    this.fetchTables({detector: this.currentDetector, revState: this.revState, offset: 0})
-  }
 };
 </script>
 
