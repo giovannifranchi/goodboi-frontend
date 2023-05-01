@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { store } from "../../store/store";
+
 import StatsComponentVue from "../general/StatsComponent.vue";
 import DetectorComponent from "../general/DetectorComponent.vue";
 import AnalyticsTableComponent from "../general/AnalyticsTableComponent.vue";
@@ -60,7 +60,6 @@ export default {
 
   data() {
     return {
-      store,
       currentDetector: 'unprotected-write',
       revState: 0,
     };
