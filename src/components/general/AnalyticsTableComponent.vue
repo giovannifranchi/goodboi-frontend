@@ -19,7 +19,7 @@
           <td class="id">{{ row.ID }}</td>
           <td>{{ renderContract(row.address) }}</td>
           <td>{{ row.chain }}</td>
-          <td class="record">{{ row["rep_load-not-store"] }}</td>
+          <td class="record">{{ row[`rep_${reportName}`] }}</td>
           <td>
             <div class="d-flex flex-column">
               <span>{{ getPF(row.PF, row.RPF) }}</span>
@@ -63,8 +63,12 @@ export default {
   props: {
     info: {
       type: Array,
-      required: true,
+      required: true
     },
+    reportName: {
+      type: String,
+      required: true
+    }
   },
 
   components: {ManualReviewComponent},

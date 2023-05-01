@@ -161,6 +161,26 @@ const store = createStore({
                 detectors = result.data;
                 commit("setDetectors", detectors);
             })
+        },
+
+        fetchTables({commit}, query){
+
+            let tables = null;
+
+            const endpoint = `http://65.108.85.188:3000/api/hits/${query.detector}/${query.revState}/${query.offset}`;
+
+            const headers = {
+                'Accept': 'application/json',
+                "Content-Type": "multipart/form-data",
+                'authtoken': this.state.user.authToken,
+            }
+
+            axios.get(endpoint, {headers})
+            .then((result)=> {
+                tables = result.data;
+                commit("setTables", tables);
+            })
+
         }
         
     }

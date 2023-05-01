@@ -30,14 +30,16 @@
             :detectorName="detector.name"
             :detectorCount="detector.count"
             @handleClick="handleDetector"
+            @click="fetchTables({detector: this.currentDetector, revState: this.revState, offset: 0})"
             :class="currentDetector === detector.name ? 'active' : ''"
           />
         </div>
       </div>
 
+
       <div class="row py-3">
         <div class="col">
-          <AnalyticsTableComponent :info="getTables" />
+          <AnalyticsTableComponent :info="getTables" :reportName="currentDetector" />
         </div>
       </div>
     </div>
@@ -59,30 +61,35 @@ export default {
   data() {
     return {
       store,
-      currentDetector: store.mokup.detectors[0].name,
+      currentDetector: 'unprotected-write',
       revState: 0,
     };
   },
 
   computed: {
-    ...mapGetters(["getDetectors"]),
+    ...mapGetters(["getDetectors", "getTables"]),
 
-    getTables() {
-      return store.mokup.tableRows;
-    },
   },
 
   methods: {
-    ...mapActions(["fetchDetectors"]),
+    ...mapActions(["fetchDetectors", "fetchTables"]),
 
     handleDetector(detectorName) {
       this.currentDetector = detectorName;
     },
+
+    logQuery(query){
+      console.log(query.detector, query.revState);
+    }
   },
 
-  created() {
-    this.fetchDetectors(this.revState);
+async created() {
+   await this.fetchDetectors(this.revState);
   },
+
+  mounted(){
+    this.fetchTables({detector: this.currentDetector, revState: this.revState, offset: 0})
+  }
 };
 </script>
 
