@@ -38,7 +38,7 @@
 
       <div class="row py-3">
         <div class="col">
-          <AnalyticsTableComponent :info="getTables" :reportName="currentDetector" />
+          <AnalyticsTableComponent :info="getTables" :currentDetector="currentDetector"/>
         </div>
       </div>
     </div>

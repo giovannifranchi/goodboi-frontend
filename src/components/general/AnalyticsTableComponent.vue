@@ -19,7 +19,7 @@
           <td class="id">{{ row.ID }}</td>
           <td>{{ renderContract(row.address) }}</td>
           <td>{{ row.chain }}</td>
-          <td class="record">{{ row[`rep_${reportName}`] }}</td>
+          <td class="record">{{ row.report }}</td>
           <td>
             <div class="d-flex flex-column">
               <span>{{ getPF(row.PF, row.RPF) }}</span>
@@ -45,7 +45,7 @@
             </div>
           </td>
           <td>
-            <ManualReviewComponent/>
+            <ManualReviewComponent :detector-name="currentDetector" :id="row.ID"/>
           </td>
         </tr>
       </tbody>
@@ -65,7 +65,8 @@ export default {
       type: Array,
       required: true
     },
-    reportName: {
+
+    currentDetector: {
       type: String,
       required: true
     }
