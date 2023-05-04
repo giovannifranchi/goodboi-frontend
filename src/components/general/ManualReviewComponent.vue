@@ -62,6 +62,8 @@ export default {
     },
   },
 
+  emits: ['pass-id'], 
+
   data() {
     return {
       showTPButtons: false,
@@ -74,6 +76,9 @@ export default {
 
   methods: {
     putManualReview(revState) {
+      this.$emit('pass-id', this.id);
+
+
       const endpoint = `http://65.108.85.188:3000/api/manualRevision/${this.id}/${this.detectorName}/${revState}`;
 
       const headers = {

@@ -38,7 +38,11 @@
 
       <div class="row py-3">
         <div class="col">
-          <AnalyticsTableComponent :info="getTables" :currentDetector="currentDetector"/>
+          <AnalyticsTableComponent
+            :info="filteredTables"
+            :currentDetector="currentDetector"
+            @re-pass-id="addToPutted"
+          />
         </div>
       </div>
     </div>
@@ -60,11 +64,22 @@ export default {
     return {
       currentDetector: "unprotected-write",
       revState: 0,
+      puttedRows: [],
     };
   },
 
   computed: {
     ...mapGetters(["getDetectors", "getTables"]),
+
+    filteredTables() {
+      if (this.puttedRows.length <= 0) {
+        return this.getTables;
+      } else {
+        return this.getTables.filter((table) => {
+          return !this.puttedRows.includes(table.ID);
+        });
+      }
+    },
   },
 
   methods: {
@@ -76,6 +91,11 @@ export default {
 
     logQuery(query) {
       console.log(query.detector, query.revState);
+    },
+
+    addToPutted(id) {
+      console.log(id, "from add to putted");
+      this.puttedRows.push(id);
     },
   },
 

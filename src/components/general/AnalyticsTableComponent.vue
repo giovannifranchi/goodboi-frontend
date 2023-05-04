@@ -45,7 +45,7 @@
             </div>
           </td>
           <td>
-            <ManualReviewComponent :detector-name="currentDetector" :id="row.ID"/>
+            <ManualReviewComponent :detector-name="currentDetector" :id="row.ID" @pass-id="emitId"/>
           </td>
         </tr>
       </tbody>
@@ -72,6 +72,8 @@ export default {
     }
   },
 
+  emits: ['re-pass-id'],
+
   components: {ManualReviewComponent},
 
   data(){
@@ -81,6 +83,12 @@ export default {
   },
 
   methods: {
+
+    emitId(id){
+      console.log(id, 'from table')
+      this.$emit('re-pass-id', id)
+    },
+
     renderContract(contract) {
       const start = contract.substring(0, 5);
       const end = contract.substring(contract.length - 3);
