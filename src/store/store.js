@@ -163,6 +163,12 @@ const store = createStore({
 
             axios.get(endpoint, {headers})
             .then((result)=> {
+                if(result.data.error){
+                    router.push('/');
+                    localStorage.removeItem('authToken');
+                    commit('setAuthToken', null);
+                    return;
+                }
                 detectors = result.data;
                 commit("setDetectors", detectors);
             })
