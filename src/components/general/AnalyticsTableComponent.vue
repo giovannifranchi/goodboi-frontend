@@ -23,7 +23,7 @@
             </a>
           </td>
           <td>{{ handleChain(row.chain) }}</td>
-          <td class="record">{{ row.report }}</td>
+          <td class="record" v-html="reportHighlight(row.report)"></td>
           <td>
             <div class="d-flex flex-column">
               <span v-html="getPF(row.PF, row.RPF)"></span>
@@ -103,6 +103,10 @@ export default {
         case 'ARBITRUM':
           return 'ARBI';
       }
+    },
+
+    reportHighlight(report){
+      return report.replace(/'([^']+)'/g, "<strong>$1</strong>");
     },
 
     createScannerLink(chain, address, isVSCode = false){
