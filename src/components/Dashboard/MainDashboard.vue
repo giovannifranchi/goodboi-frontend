@@ -5,7 +5,7 @@
 
       <!-- Rev State radios -->
       <h3>Revision State</h3>
-      <div class="row row-cols-5">
+      <div class="row row-cols-5 w-25">
         <div class="col" v-for="(radio, index) in 5" :key="index">
           <div class="form-check">
             <input
