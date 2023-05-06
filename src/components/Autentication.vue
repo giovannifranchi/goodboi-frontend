@@ -55,16 +55,6 @@ export default {
     }
 
   },
-
-  
-
-  mounted(){
-    const token =  localStorage.getItem('authToken');
-
-    if(token){
-      this.setAuthToken(token);
-    }
-  }
 };
 </script>
 

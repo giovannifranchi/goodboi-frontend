@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-
+import { useRouter } from 'vue-router';
 import axios from "axios";
 
 const store = createStore({
@@ -151,6 +151,8 @@ const store = createStore({
         fetchDetectors({commit}, query){
             let detectors = null;
 
+            const router = useRouter();
+
             const endpoint = `http://65.108.85.188:3000/api/detectors/${query}`;
 
             const headers = {
@@ -162,10 +164,6 @@ const store = createStore({
             axios.get(endpoint, {headers})
             .then((result)=> {
                 detectors = result.data;
-                if(detectors.error === 'invalid_session'){
-                    commit('setAuthToken', null);
-                    return;
-                }
                 commit("setDetectors", detectors);
             })
         },

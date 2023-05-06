@@ -1,29 +1,40 @@
 <template>
-    <Autentication v-if="getAuthToken === undefined || getAuthToken === null"/> <!-- TODO: it has to be changed with v-if="!user" -->
-    <Dashborad v-else/>
+    <RouterView/>
 </template>
 
 <script>
 
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import Autentication from '../components/Autentication.vue';
 import Dashborad from '../components/Dashborad.vue';
+import { onMounted } from 'vue';
 
     export default {
         name: 'Home',
 
         components: {Autentication, Dashborad},
 
-        data(){
-            return {
-                currentPage: 0,
-                isUser: false,
-            }
-        },
 
         computed: {
             ...mapGetters(["getAuthToken"])
         },
+
+        methods: {
+            ...mapMutations(["setAuthToken"])
+        },
+
+        watch: {
+            getAuthToken(){
+                this.$router.push(this.getAuthToken ? '/dashboard' : '/');
+            }
+        },
+
+        created(){
+            const token = localStorage.getItem('authToken');
+            if(token){
+                this.setAuthToken(token);
+            }
+        }
 
     }
 </script>
