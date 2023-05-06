@@ -10,7 +10,7 @@
           <th>FLAGS</th>
           <th>LAST TX</th>
           <th>AN DATE</th>
-          <th>GO TO ACTION</th>
+          <th>VS Code</th>
           <th>SET MANUAL REVIEW</th>
         </tr>
       </thead>
@@ -26,8 +26,8 @@
           <td class="record">{{ row.report }}</td>
           <td>
             <div class="d-flex flex-column">
-              <span>{{ getPF(row.PF, row.RPF) }}</span>
-              <span>{{ getBF(row.BF, row.RBF) }}</span>
+              <span v-html="getPF(row.PF, row.RPF)"></span>
+              <span v-html="getBF(row.BF, row.RBF)"></span>
             </div>
           </td>
           <td class="text-start">
@@ -100,7 +100,7 @@ export default {
           return 'BSC';
         case 'POLYGON':
           return 'POLY';
-        case 'ARBITRIUM':
+        case 'ARBITRUM':
           return 'ARBI';
       }
     },
@@ -113,7 +113,7 @@ export default {
           return  isVSCode ?  `https://etherscan.deth.net/address/${address}` : `https://etherscan.io/address/${address}`;
         case 'POLYGON':
           return  isVSCode ?  `https://polygonscan.deth.net/address/${address}` : `https://polygonscan.com/address/${address}`;
-        case 'ARBITRIUM':
+        case 'ARBITRUM':
           return  isVSCode ?  `https://arbiscan.deth.net/address/${address}` : `https://arbiscan.io/address/${address}`;
         default:
           return '';
@@ -128,14 +128,14 @@ export default {
 
     getPF(pf, rpf) {
       const values = [];
-      pf ? values.push("PF") : null;
+      pf ? values.push("<strong>PF</strong>") : null;
       rpf ? values.push("RPF") : null;
       return values.join(", ");
     },
 
     getBF(bf, rbf) {
       const values = [];
-      bf ? values.push("BF") : null;
+      bf ? values.push("<b>BF</b>") : null;
       rbf ? values.push("RBF") : null;
       return values.join(", ");
     },
