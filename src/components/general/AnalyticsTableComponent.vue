@@ -17,8 +17,12 @@
       <tbody>
         <tr v-for="(row, index) in info" :key="index">
           <td class="id">{{ row.ID }}</td>
-          <td>{{ renderContract(row.address) }}</td>
-          <td>{{ row.chain }}</td>
+          <td>
+            <a :href="createScannerLink(row.chain, row.address)" target="_blank">
+              {{ renderContract(row.address) }}
+            </a>
+          </td>
+          <td>{{ handleChain(row.chain) }}</td>
           <td class="record">{{ row.report }}</td>
           <td>
             <div class="d-flex flex-column">
@@ -27,21 +31,20 @@
             </div>
           </td>
           <td class="text-start">
-            <div class="d-flex flex-column">
-              <span>D: {{ handleDate(row.lastTX) }}</span>
-              <span>T: {{ handleTime(row.lastTX) }}</span>
+            <div class="d-flex flex-column align-items-center">
+              <span>{{ handleDate(row.lastTX) }}</span>
+              <span>{{ handleTime(row.lastTX) }}</span>
             </div>
           </td>
           <td class="text-start">
-            <div class="d-flex flex-column">
-              <span>D: {{ handleDate(row.anDate) }}</span>
-              <span>T: {{ handleTime(row.anDate) }}</span>
+            <div class="d-flex flex-column align-items-center">
+              <span>{{ handleDate(row.anDate) }}</span>
+              <span>{{ handleTime(row.anDate) }}</span>
             </div>
           </td>
           <td>
             <div class="d-flex flex-column">
-              <span>Go to <a href="#">scanner</a></span>
-              <span>Go to <a href="#">neth.net</a></span>
+              <span>Go to <a :href="createScannerLink(row.chain, row.address, true)" target="_blank">neth.net</a></span>
             </div>
           </td>
           <td>
@@ -89,6 +92,34 @@ export default {
       this.$emit('re-pass-id', id)
     },
 
+    handleChain(chain){
+      switch(chain){
+        case 'ETH_MAINNET':
+          return 'ETH';
+        case 'BSC_MAINNET':
+          return 'BSC';
+        case 'POLYGON':
+          return 'POLY';
+        case 'ARBITRIUM':
+          return 'ARBI';
+      }
+    },
+
+    createScannerLink(chain, address, isVSCode = false){
+      switch(chain){
+        case 'BSC_MAINNET':
+          return  isVSCode ?  `https://bscscan.deth.net/address/${address}` : `https://bscscan.com/address/${address}`;
+        case 'ETH_MAINNET':
+          return  isVSCode ?  `https://etherscan.deth.net/address/${address}` : `https://etherscan.io/address/${address}`;
+        case 'POLYGON':
+          return  isVSCode ?  `https://polygonscan.deth.net/address/${address}` : `https://polygonscan.com/address/${address}`;
+        case 'ARBITRIUM':
+          return  isVSCode ?  `https://arbiscan.deth.net/address/${address}` : `https://arbiscan.io/address/${address}`;
+        default:
+          return '';
+      }
+    },
+
     renderContract(contract) {
       const start = contract.substring(0, 5);
       const end = contract.substring(contract.length - 3);
@@ -115,7 +146,7 @@ export default {
     },
 
     handleTime(myDate) {
-      return myDate.slice(11, 19);
+      return myDate.slice(11, 16);
     },
   },
 };
@@ -140,7 +171,12 @@ export default {
     vertical-align: middle;
     text-align: center;
   }
-
+  td {
+    padding: 0.5rem 0;
+    &.record {
+      text-align: left;
+    }
+  }
   .record {
     width: 30%;
   }
