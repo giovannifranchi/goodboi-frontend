@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column gap-3 align-items-center" v-if="!showTPButtons">
-    <button type="button" class="btn btn-danger w-100" @click="putManualReview(1)">FP</button>
-    <button type="button" class="btn btn-success w-50" @click="showTPButtons = true">TP</button>
+    <button type="button" class="btn btn-danger w-100 py-3" @click="putManualReview(1)">FP</button>
+    <button type="button" class="btn btn-success w-100" @click="showTPButtons = true">TP</button>
   </div>
   <div class="d-flex flex-column gap-3 align-items-center" v-else>
     <button
@@ -30,7 +30,7 @@
     </button>
     <button
       type="button"
-      class="btn btn-success w-auto"
+      class="btn btn-success w-100"
       @click="
         () => {
           showTPButtons = false;
@@ -38,7 +38,7 @@
         }
       "
     >
-      Explotable
+      Exploitable
     </button>
   </div>
 </template>
