@@ -122,11 +122,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '../../assets/partials/variables' as *;
+
+
 .table-wrapper {
   width: 100%;
   table {
     width: 100%;
     table-layout: fixed;
+    background-color: $table-color;
   }
   th,
   td {
