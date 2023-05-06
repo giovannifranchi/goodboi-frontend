@@ -86,9 +86,12 @@ const store = createStore({
             axios.post(endpoint, payload, {headers})
             .then((result)=> {
                 authToken = result.data.token;
+                localStorage.setItem('authToken', authToken);
                 commit('setAuthToken', authToken);
             })
         },
+
+        
 
         fetchContracts({commit}){
             let contracts = null;
@@ -159,6 +162,10 @@ const store = createStore({
             axios.get(endpoint, {headers})
             .then((result)=> {
                 detectors = result.data;
+                if(detectors.error === 'invalid_session'){
+                    commit('setAuthToken', null);
+                    return;
+                }
                 commit("setDetectors", detectors);
             })
         },

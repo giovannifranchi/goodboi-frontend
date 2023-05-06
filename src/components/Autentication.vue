@@ -18,15 +18,14 @@
         <input type="password" class="form-control" id="exampleInputPassword1" v-model="query.password" />
       </div>
       <button type="submit" class="btn btn-primary">login</button>
-      <div>{{ getAuthToken }}</div>
     </form>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import AutoTypingComponent from "./AutoTypingComponent.vue";
-import axios from "axios";
+
 
 export default {
   name: "Authentication",
@@ -48,6 +47,7 @@ export default {
 
   methods: {
     ...mapActions(['login']),
+    ...mapMutations(['setAuthToken']),
 
     logintry(query){ //TODO: refactoring required for semantic names and optimization
       
@@ -55,6 +55,16 @@ export default {
     }
 
   },
+
+  
+
+  mounted(){
+    const token =  localStorage.getItem('authToken');
+
+    if(token){
+      this.setAuthToken(token);
+    }
+  }
 };
 </script>
 
