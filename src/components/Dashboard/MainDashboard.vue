@@ -125,11 +125,11 @@ export default {
     },
 
     putCall(id, revState) {
-      const endpoint = `http://65.108.85.188:3000/api/manualRevision/${id}/${this.detectorName}/${revState}`;
+      const endpoint = `http://65.108.85.188:3000/api/manualRevision/${id}/${this.currentDetector}/${revState}`;
 
       const headers = {
-        Accept: "application/json",
-        authtoken: this.getAuthToken,
+        "Accept": "application/json",
+        "authtoken": this.getAuthToken,
       };
 
       axios.put(endpoint, null, { headers }).then((res) => {
