@@ -87,9 +87,8 @@ export default {
 
   methods: {
 
-    emitId(id){
-      console.log(id, 'from table')
-      this.$emit('re-pass-id', id)
+    emitId(id, revState){
+      this.$emit('re-pass-id', id, revState);
     },
 
     handleChain(chain){

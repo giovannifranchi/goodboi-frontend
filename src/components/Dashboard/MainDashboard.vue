@@ -47,9 +47,14 @@
       </div>
     </div>
   </main>
+
+  <button class="btn btn-danger position-fixed top-0 end-0" v-show="showAbort" @click="abortActive = true">
+    abort
+  </button>
 </template>
 
 <script>
+import axios from "axios";
 import StatsComponentVue from "../general/StatsComponent.vue";
 import DetectorComponent from "../general/DetectorComponent.vue";
 import AnalyticsTableComponent from "../general/AnalyticsTableComponent.vue";
@@ -64,12 +69,15 @@ export default {
     return {
       currentDetector: "unprotected-write",
       revState: 0,
+      showAbort: false,
+      abortActive: false,
+      lastclickedID: "",
       puttedRows: [],
     };
   },
 
   computed: {
-    ...mapGetters(["getDetectors", "getTables"]),
+    ...mapGetters(["getDetectors", "getTables", "getAuthToken"]),
 
     filteredTables() {
       if (this.puttedRows.length <= 0) {
@@ -83,6 +91,7 @@ export default {
   },
 
   methods: {
+    //you need to move the put call in here which is triggered by the handle id emit
     ...mapActions(["fetchDetectors", "fetchTables"]),
 
     handleDetector(detectorName) {
@@ -93,9 +102,42 @@ export default {
       console.log(query.detector, query.revState);
     },
 
-    addToPutted(id) {
-      console.log(id, "from add to putted");
+    addToPutted(id, revState) {
+      console.log(id, revState);
       this.puttedRows.push(id);
+      this.putRev(id, revState);
+    },
+
+    putRev(id, revState) {
+      this.lastclickedID = id;
+      this.showAbort = true;
+      let abortTimeout = setTimeout(() => {
+        this.showAbort = false;
+        if (this.abortActive && id === this.lastclickedID) {
+          this.abortActive = false;
+          this.puttedRows.pop();
+          clearTimeout(abortTimeout);
+          return;
+        }
+        this.putCall(id, revState);
+      }, 5000);
+    },
+
+    putCall(id, revState) {
+      const endpoint = `http://65.108.85.188:3000/api/manualRevision/${id}/${this.detectorName}/${revState}`;
+
+      const headers = {
+        Accept: "application/json",
+        authtoken: this.getAuthToken,
+      };
+
+      axios.put(endpoint, null, { headers }).then((res) => {
+        if (res.data.error === undefined || res.data.error === null) {
+          console.log("put success");
+        } else {
+          console.log(res.data.error);
+        }
+      });
     },
   },
 
