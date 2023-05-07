@@ -5,8 +5,8 @@
 
       <!-- Rev State radios -->
       <h3>Revision State</h3>
-      <div class="row row-cols-5 w-25">
-        <div class="col" v-for="(radio, index) in 5" :key="index">
+      <div class="row row-cols-5 w-50">
+        <div class="col d-flex justify-content-center" v-for="(radio, index) in revStateFields" :key="index">
           <div class="form-check">
             <input
               class="form-check-input"
@@ -18,7 +18,7 @@
               :value="index"
               @change="fetchDetectors(revState)"
             />
-            <label class="form-check-label" :for="`rev${index}`">{{ index }}</label>
+            <label class="form-check-label" :for="`rev${index}`">{{ radio }}</label>
           </div>
         </div>
       </div>
@@ -68,6 +68,7 @@ export default {
   data() {
     return {
       currentDetector: "unprotected-write",
+      revStateFields: ['Unreviewed', 'FP', 'TP_Useless', 'TP_Niceish', 'TP_Explotable'],
       revState: 0,
       showAbort: false,
       abortActive: false,
@@ -138,6 +139,7 @@ export default {
           console.log(res.data.error);
         }
       });
+      
     },
   },
 
