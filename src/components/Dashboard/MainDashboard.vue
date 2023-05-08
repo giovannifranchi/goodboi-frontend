@@ -48,7 +48,7 @@
     </div>
   </main>
 
-  <button class="btn btn-danger position-fixed top-0 end-0" v-show="showAbort" @click="abortActive = true">
+  <button class="btn btn-danger position-fixed" :class="showAbort ? 'visible' : 'unvisible'" v-show="showAbort" @click="{abortActive = true; this.showAbort = false;}">
     abort
   </button>
 </template>
@@ -113,39 +113,41 @@ export default {
       this.lastclickedID = id;
       this.showAbort = true;
       let abortTimeout = setTimeout(() => {
-        this.showAbort = false;
-        if (this.abortActive && id === this.lastclickedID) {
-          this.abortActive = false;
+        if(this.abortActive && id === this.lastclickedID) {
           this.puttedRows.pop();
           clearTimeout(abortTimeout);
           return;
         }
         this.putCall(id, revState);
+        this.showAbort = false;
       }, 5000);
     },
 
     putCall(id, revState) {
-      const endpoint = `http://65.108.85.188:3000/api/manualRevision/${id}/${this.currentDetector}/${revState}`;
+      // const endpoint = `http://65.108.85.188:3000/api/manualRevision/${id}/${this.currentDetector}/${revState}`;
 
-      const headers = {
-        "Accept": "application/json",
-        "authtoken": this.getAuthToken,
-      };
+      // const headers = {
+      //   "Accept": "application/json",
+      //   "authtoken": this.getAuthToken,
+      // };
 
-      axios.put(endpoint, null, { headers }).then((res) => {
-        if (res.data.error === undefined || res.data.error === null) {
-          console.log("put success");
-        } else {
-          console.log(res.data.error);
-        }
-      });
+      // axios.put(endpoint, null, { headers }).then((res) => {
+      //   if (res.data.error === undefined || res.data.error === null) {
+      //     console.log("put success");
+      //   } else {
+      //     console.log(res.data.error);
+      //   }
+      //   this.showAbort = false;
+      // });
+
+      console.log(id, revState, 'putted function');
       
     },
   },
 
-  async created() {
-    await this.fetchDetectors(this.revState);
-    await this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 });
+  created() {
+    this.fetchDetectors(this.revState);
+    this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 });
   },
 };
 </script>
@@ -156,4 +158,18 @@ export default {
 main {
   background-color: $header-color;
 }
+
+.unvisible {
+    top: 20px;
+    right: -20px;
+    opacity: 0;
+    transition: all 1s ease-in-out;
+  }
+
+  .visible{
+    top: 40px;
+    right: 20px;
+    opacity: 1;
+    transition: all 1s ease-in-out;
+  }
 </style>

@@ -86,7 +86,7 @@ const store = createStore({
                 password: query.password,
             }
             try {
-                const response =  await axios.post(endpoint, payload, {headers})
+                const response = await axios.post(endpoint, payload, {headers})
                 if(response.data.error){
                     throw new Error(response.data.error);
                 }
