@@ -48,7 +48,7 @@
     </div>
   </main>
 
-  <button class="btn btn-danger position-fixed" :class="showAbort ? 'visible' : 'unvisible'" v-show="showAbort" @click="{abortActive = true; this.showAbort = false;}">
+  <button class="btn btn-danger position-fixed" :class="showAbort ? 'ms-visible' : 'ms-unvisible'" @click="{abortActive = true; this.showAbort = false;}">
     abort
   </button>
 </template>
@@ -159,15 +159,15 @@ main {
   background-color: $header-color;
 }
 
-.unvisible {
+.ms-unvisible {
     top: 20px;
     right: -20px;
     opacity: 0;
     transition: all 1s ease-in-out;
   }
 
-  .visible{
-    top: 40px;
+  .ms-visible{
+    top: 20px;
     right: 20px;
     opacity: 1;
     transition: all 1s ease-in-out;
