@@ -118,8 +118,8 @@ export default {
           clearTimeout(abortTimeout);
           return;
         }
-        this.putCall(id, revState);
         this.showAbort = false;
+        this.putCall(id, revState);
       }, 5000);
     },
 
@@ -161,15 +161,16 @@ main {
 
 .ms-unvisible {
     top: 20px;
-    right: -20px;
-    opacity: 0;
-    transition: all 1s ease-in-out;
+    right: -100px;
+    opacity: 1;
+    transition: opacity 6s ease-in, right 1s ease;
   }
 
   .ms-visible{
     top: 20px;
     right: 20px;
-    opacity: 1;
-    transition: all 1s ease-in-out;
+    opacity: 0;
+    transition: opacity 6s ease-in-out, right 1s ease-out;
+    
   }
 </style>
