@@ -1,6 +1,6 @@
 <template>
 
-  <table class="table table-striped table-hover">
+  <table class="table bg-black text-white">
     <thead>
         <tr>
             <th scope="col">Error Type</th>

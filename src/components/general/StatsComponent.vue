@@ -5,7 +5,7 @@
     </div>
     <div class="col-4">
       <ContractsComponent :contractsNumber="getContractNumer" :contracts24Number="getContracts24" />
-      <button type="button" class="btn btn-danger" @click="showTable">
+      <button type="button" class="btn btn-danger disabled" @click="showTable">
         Errors: {{ getErrorsPercentage }}%
       </button>
     </div>
@@ -30,7 +30,7 @@ export default {
 
   data() {
     return {
-      tableShow: false,
+      tableShow: true,
     };
   },
 
