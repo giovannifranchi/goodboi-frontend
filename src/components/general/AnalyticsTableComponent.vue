@@ -7,7 +7,7 @@
           <th>ADDRESS</th>
           <th>CHAIN</th>
           <th class="record">REPORT</th>
-          <th>FLAGS</th>
+          <th >FLAGS</th>
           <th>LAST TX</th>
           <th>AN DATE</th>
           <th>VS Code</th>
@@ -24,7 +24,7 @@
           </td>
           <td>{{ handleChain(row.chain) }}</td>
           <td class="record" v-html="reportHighlight(row.report)"></td>
-          <td>
+          <td >
             <div class="d-flex flex-column">
               <span v-html="getPF(row.PF, row.RPF)"></span>
               <span v-html="getBF(row.BF, row.RBF)"></span>
@@ -181,7 +181,7 @@ export default {
     }
   }
   .record {
-    width: 30%;
+    width: 40%;
   }
 
   .id {
