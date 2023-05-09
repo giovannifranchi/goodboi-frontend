@@ -4,7 +4,7 @@
         <div class="container">
 
             <div class="user-container py-3 gap-3 d-flex justify-content-end align-items-center">
-                <h3>{{ getUsername }}</h3>
+                <h3>{{ getName }}</h3>
             </div>
 
         </div>
@@ -19,7 +19,9 @@ import { mapGetters } from 'vuex';
         name: 'HeaderDashboard',
 
         computed: {
-            ...mapGetters(["getUsername"]),
+            getName(){
+                return localStorage.getItem('username')
+            }
         }
     }
 </script>

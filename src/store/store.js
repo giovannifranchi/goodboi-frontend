@@ -100,6 +100,7 @@ const store = createStore({
                     throw new Error(response.data.error);
                 }
                 localStorage.setItem('authToken', response.data.token);
+                localStorage.setItem('username', payload.username)
                 commit('setAuthToken', response.data.token);
                 commit('setUsername', payload.username);
             }catch(error){

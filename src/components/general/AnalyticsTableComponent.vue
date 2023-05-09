@@ -10,7 +10,6 @@
           <th >FLAGS</th>
           <th>LAST TX</th>
           <th>AN DATE</th>
-          <th>VS Code</th>
           <th>SET MANUAL REVIEW</th>
         </tr>
       </thead>
@@ -18,9 +17,14 @@
         <tr v-for="(row, index) in info" :key="index">
           <td class="id">{{ row.ID }}</td>
           <td>
-            <a :href="createScannerLink(row.chain, row.address)" target="_blank">
-              {{ renderContract(row.address) }}
-            </a>
+            <div class="d-flex flex-column align-items-center">
+              <a :href="createScannerLink(row.chain, row.address, true)" target="_blank">
+                <img src="../../assets/img/visual-studio.png" alt="">
+              </a>
+              <a :href="createScannerLink(row.chain, row.address)" target="_blank">
+                {{ renderContract(row.address) }}
+              </a>
+            </div>
           </td>
           <td>{{ handleChain(row.chain) }}</td>
           <td class="record" v-html="reportHighlight(row.report)"></td>
@@ -40,11 +44,6 @@
             <div class="d-flex flex-column align-items-center">
               <span>{{ handleDate(row.anDate) }}</span>
               <span>{{ handleTime(row.anDate) }}</span>
-            </div>
-          </td>
-          <td>
-            <div class="d-flex flex-column">
-              <span>Go to <a :href="createScannerLink(row.chain, row.address, true)" target="_blank">neth.net</a></span>
             </div>
           </td>
           <td>
@@ -181,7 +180,7 @@ export default {
     }
   }
   .record {
-    width: 30%;
+    width: 40%;
   }
 
   .id {
