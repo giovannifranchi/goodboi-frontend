@@ -4,8 +4,7 @@
         <div class="container">
 
             <div class="user-container py-3 gap-3 d-flex justify-content-end align-items-center">
-                <img src="../../assets/img/user.jpeg" alt="user">
-                <h3>Nome Cognome</h3>
+                <h3>{{ getUsername }}</h3>
             </div>
 
         </div>
@@ -14,8 +13,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
     export default {
-        name: 'HeaderDashboard'
+        name: 'HeaderDashboard',
+
+        computed: {
+            ...mapGetters(["getUsername"]),
+        }
     }
 </script>
 

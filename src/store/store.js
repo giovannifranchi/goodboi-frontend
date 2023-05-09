@@ -10,6 +10,7 @@ const store = createStore({
     state:{
 
         user: {
+            username: null,
             authToken: null,
             contracts: null,
             contracts24: null,
@@ -20,6 +21,10 @@ const store = createStore({
     },
 
     getters: {
+
+        getUsername(state){
+            return state.user.username;
+        },
 
         getAuthToken(state){
             return state.user.authToken;
@@ -48,6 +53,10 @@ const store = createStore({
     },
 
     mutations: {
+
+        setUsername(state, value){
+            state.user.username = value;
+        },
 
         setAuthToken(state, value){
             state.user.authToken = value;
@@ -92,6 +101,7 @@ const store = createStore({
                 }
                 localStorage.setItem('authToken', response.data.token);
                 commit('setAuthToken', response.data.token);
+                commit('setUsername', payload.username);
             }catch(error){
                 toast.error(error.message);
             }

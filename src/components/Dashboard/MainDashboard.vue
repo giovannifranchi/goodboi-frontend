@@ -24,8 +24,8 @@
       </div>
       <!-- TODOs: add a spinner component also here to handle the lag in fetchDetectors call ath radio button change -->
 
-      <div class="row py-5">
-        <div class="col-3" v-for="(detector, index) in getDetectors" :key="index">
+      <div class="row py-5 gy-4">
+        <div class="col-4" v-for="(detector, index) in getDetectors" :key="index">
           <DetectorComponent
             :detectorName="detector.name"
             :detectorCount="detector.count"
@@ -124,24 +124,21 @@ export default {
     },
 
     putCall(id, revState) {
-      // const endpoint = `http://65.108.85.188:3000/api/manualRevision/${id}/${this.currentDetector}/${revState}`;
+      const endpoint = `http://65.108.85.188:3000/api/manualRevision/${id}/${this.currentDetector}/${revState}`;
 
-      // const headers = {
-      //   "Accept": "application/json",
-      //   "authtoken": this.getAuthToken,
-      // };
+      const headers = {
+        "Accept": "application/json",
+        "authtoken": this.getAuthToken,
+      };
 
-      // axios.put(endpoint, null, { headers }).then((res) => {
-      //   if (res.data.error === undefined || res.data.error === null) {
-      //     console.log("put success");
-      //   } else {
-      //     console.log(res.data.error);
-      //   }
-      //   this.showAbort = false;
-      // });
-
-      console.log(id, revState, 'putted function');
-      
+      axios.put(endpoint, null, { headers }).then((res) => {
+        if (res.data.error === undefined || res.data.error === null) {
+          console.log("put success");
+        } else {
+          console.log(res.data.error);
+        }
+        this.showAbort = false;
+      });
     },
   },
 
