@@ -181,7 +181,7 @@ export default {
     }
   }
   .record {
-    width: 40%;
+    width: 30%;
   }
 
   .id {
