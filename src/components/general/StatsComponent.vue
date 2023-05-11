@@ -17,7 +17,7 @@
   <div class="row mb-5">
     <div class="col-4">
       <ContractsComponent :contractsNumber="getContractNumer" :contracts24Number="getContracts24" />
-      <button type="button" class="btn btn-danger" @click="showTable" :class="{active: tableShow}">Flagged: {{ getFlaggedNumber }}</button>
+      <button type="button" class="btn btn-danger" @click="showTable" :class="{active: tableShow}">Flagged: <strong>{{ formatNumber(getFlaggedNumber )}}</strong></button>
     </div>
   </div>
 </template>
@@ -131,6 +131,16 @@ export default {
     showTable() {
       this.tableShow ? this.tableShow = false : this.tableShow = true;
     },
+
+    formatNumber(number){
+      if(number){
+        const formattedNumber = number.toLocaleString('en-US', {
+        useGrouping: true,
+        minimumFractionDigits: 0
+      }).replace(/,/g, "'"); //Remove the replace if you want separators at the bottom
+      return formattedNumber;
+      }
+    }
   },
 
   async created() {
