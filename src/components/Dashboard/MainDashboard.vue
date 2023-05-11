@@ -25,7 +25,7 @@
       <!-- TODOs: add a spinner component also here to handle the lag in fetchDetectors call ath radio button change -->
 
       <div class="row py-5 gy-4">
-        <div class="col-3" v-for="(detector, index) in getDetectors" :key="index">
+        <div class="col-3" v-for="(detector, index) in orderDetectors" :key="index">
           <DetectorComponent
             :detectorName="detector.name"
             :detectorCount="detector.count"
@@ -48,7 +48,16 @@
     </div>
   </main>
 
-  <button class="btn btn-danger position-fixed" :class="showAbort ? 'ms-visible' : 'ms-unvisible'" @click="{abortActive = true; this.showAbort = false;}">
+  <button
+    class="btn btn-danger position-fixed"
+    :class="showAbort ? 'ms-visible' : 'ms-unvisible'"
+    @click="
+      {
+        abortActive = true;
+        this.showAbort = false;
+      }
+    "
+  >
     abort
   </button>
 </template>
@@ -89,6 +98,19 @@ export default {
         });
       }
     },
+
+    orderDetectors(){
+      if (this.getDetectors) {
+    return this.getDetectors.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+    }
   },
 
   methods: {
@@ -146,6 +168,7 @@ export default {
     this.fetchDetectors(this.revState);
     this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 });
   },
+}
 };
 </script>
 
@@ -157,17 +180,16 @@ main {
 }
 
 .ms-unvisible {
-    top: 20px;
-    right: -100px;
-    opacity: 1;
-    transition: opacity 6s ease-in, right 1s ease;
-  }
+  top: 20px;
+  right: -100px;
+  opacity: 1;
+  transition: opacity 6s ease-in, right 1s ease;
+}
 
-  .ms-visible{
-    top: 20px;
-    right: 20px;
-    opacity: 0;
-    transition: opacity 6s ease-in-out, right 1s ease-out;
-    
-  }
+.ms-visible {
+  top: 20px;
+  right: 20px;
+  opacity: 0;
+  transition: opacity 6s ease-in-out, right 1s ease-out;
+}
 </style>
