@@ -1,9 +1,9 @@
 import { createStore } from "vuex";
-import { useRouter } from 'vue-router';
 import { useToast } from "vue-toastification";
 import axios from "axios";
 
 const toast = useToast();
+
 
 const store = createStore({
 
@@ -121,8 +121,14 @@ const store = createStore({
                 'authtoken': this.state.user.authToken,
             }
 
+
             axios.get(endpoint, {headers})
             .then((result)=>{
+                if(result.data.error){
+                    localStorage.removeItem('authToken');
+                    commit('setAuthToken', null);
+                    return;
+                }
                 contracts = result.data;
                 commit("setContracts", contracts);
             })
@@ -138,9 +144,15 @@ const store = createStore({
                 "Content-Type": "multipart/form-data",
                 'authtoken': this.state.user.authToken,
             }
-
+            
             axios.get(endpoint, {headers})
             .then((result)=>{
+                if(result.data.error){
+                    
+                    localStorage.removeItem('authToken');
+                    commit('setAuthToken', null);
+                    return;
+                }
                 contracts = result.data.count;
                 commit("setContracts24", contracts);
             })
@@ -159,6 +171,11 @@ const store = createStore({
 
             axios.get(endpoint, {headers})
             .then((result)=>{
+                if(result.data.error){
+                    localStorage.removeItem('authToken');
+                    commit('setAuthToken', null);
+                    return;
+                }
                 compilationErrors = result.data;
                 commit("setCompilationErrors", compilationErrors);
             })
@@ -168,20 +185,17 @@ const store = createStore({
         fetchDetectors({commit}, query){
             let detectors = null;
 
-            const router = useRouter();
-
             const endpoint = `http://65.108.85.188:3000/api/detectors/${query}`;
 
             const headers = {
                 'Accept': 'application/json',
                 "Content-Type": "multipart/form-data",
                 'authtoken': this.state.user.authToken,
-            }
 
+            }
             axios.get(endpoint, {headers})
             .then((result)=> {
                 if(result.data.error){
-                    router.push('/');
                     localStorage.removeItem('authToken');
                     commit('setAuthToken', null);
                     return;
@@ -202,9 +216,13 @@ const store = createStore({
                 "Content-Type": "multipart/form-data",
                 'authtoken': this.state.user.authToken,
             }
-
             axios.get(endpoint, {headers})
             .then((result)=> {
+                if(result.data.error){
+                    localStorage.removeItem('authToken');
+                    commit('setAuthToken', null);
+                    return;
+                }
                 tables = result.data;
                 commit("setTables", tables);
             })
