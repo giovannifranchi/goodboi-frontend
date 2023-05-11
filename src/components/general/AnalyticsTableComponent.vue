@@ -159,7 +159,7 @@ export default {
 
 
 .table-wrapper {
-  width: 100%;
+
   table {
     width: 100%;
     table-layout: fixed;

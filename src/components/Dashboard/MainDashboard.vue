@@ -36,16 +36,13 @@
         </div>
       </div>
       <h4>Load not stored: XX(Y%)</h4>
-      <div class="row py-3">
-        <div class="col">
-          <AnalyticsTableComponent
+    </div>
+    <AnalyticsTableComponent
             :info="filteredTables"
             :currentDetector="currentDetector"
             @re-pass-id="addToPutted"
+            class="analytics-table"
           />
-        </div>
-      </div>
-    </div>
   </main>
 
   <button
@@ -192,5 +189,9 @@ main {
   right: 20px;
   opacity: 0;
   transition: opacity 6s ease-in-out, right 1s ease-out;
+}
+
+.analytics-table{
+  margin: 0 15px;
 }
 </style>
