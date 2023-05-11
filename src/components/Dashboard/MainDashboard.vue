@@ -23,9 +23,9 @@
         </div>
       </div>
       <!-- TODOs: add a spinner component also here to handle the lag in fetchDetectors call ath radio button change -->
-
-      <div class="row py-5 gy-4">
-        <div class="col-3" v-for="(detector, index) in orderDetectors" :key="index">
+      <h3 class="pt-5">Detectors</h3>
+      <div class="d-flex flex-wrap pb-5 pt-3 gy-4 gap-3">
+        <div  v-for="(detector, index) in orderDetectors" :key="index">
           <DetectorComponent
             :detectorName="detector.name"
             :detectorCount="detector.count"
