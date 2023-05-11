@@ -25,7 +25,7 @@
       <!-- TODOs: add a spinner component also here to handle the lag in fetchDetectors call ath radio button change -->
       <h3 class="pt-5">Detectors</h3>
       <div class="d-flex flex-wrap pb-5 pt-3 gy-4 gap-3">
-        <div  v-for="(detector, index) in orderDetectors" :key="index">
+        <div v-for="(detector, index) in orderDetectors" :key="index">
           <DetectorComponent
             :detectorName="detector.name"
             :detectorCount="detector.count"
@@ -112,6 +112,7 @@ export default {
     });
     }
   },
+ },
 
   methods: {
     //you need to move the put call in here which is triggered by the handle id emit
@@ -169,7 +170,7 @@ export default {
     this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 });
   },
 }
-};
+;
 </script>
 
 <style lang="scss" scoped>
