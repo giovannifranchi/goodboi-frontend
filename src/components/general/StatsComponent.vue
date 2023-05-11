@@ -35,7 +35,7 @@ export default {
 
   data() {
     return {
-      tableShow: true,
+      tableShow: false,
     };
   },
 
