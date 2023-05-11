@@ -38,7 +38,7 @@
         <div class="col-8 d-flex justify-content-between">
           <h4>Detector: {{ currentDetector }}</h4>
           <!-- ADD: format number method -->
-          <h4>Analyzed: {{ formatNumber(getAnalysisCount.count) }} ({{ getDetectorAnalysisPercentage }}%)</h4>
+          <h4>Analyzed: {{ getAnalysisCount ? formatNumber(getAnalysisCount.count) : ''}} ({{ getDetectorAnalysisPercentage }}%)</h4>
         </div>
       </div>
     </div>
@@ -206,6 +206,7 @@ export default {
     this.fetchAnalysisCount(this.currentDetector);
     this.fetchCompilationErrors();
   },
+
 }
 ;
 </script>
