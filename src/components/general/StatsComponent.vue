@@ -12,8 +12,9 @@
     <div class="col-4">
       <ContractsComponent :contractsNumber="getContractNumer" :contracts24Number="getContracts24" />
       <button type="button" class="btn btn-danger disabled" @click="showTable">
-       Flagged: {{ getErrorsPercentage }}%
+       Flagged: {{ getFlaggedNumber }}
       </button>
+      
       
     </div>
   </div>
@@ -39,7 +40,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getContracts", "getContracts24", "getCompilationErrors"]),
+    ...mapGetters(["getContracts", "getContracts24", "getCompilationErrors", "getFlaggedContracts"]),
 
     getSeries() {
       const numbers = [];
@@ -66,6 +67,10 @@ export default {
       };
     },
 
+    getFlaggedOptions(){
+      
+    },
+
     getContractNumer() {
       const numbers = [];
       for (let contracts in this.getContracts) {
@@ -77,6 +82,16 @@ export default {
         return 0;
       } else {
         return numbers.reduce((acc, curr) => acc + curr);
+      }
+    },
+
+    getFlaggedNumber(){
+      if(this.getFlaggedContracts){
+        const totalNumbers = [];
+        for(let flagged in this.getFlaggedContracts){
+          totalNumbers.push(this.getFlaggedContracts[flagged]);
+        }
+        return totalNumbers.reduce((acc, curr)=> acc + curr);
       }
     },
 
@@ -106,7 +121,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["fetchContracts", "fetchContracts24", "fetchCompilationErrors"]),
+    ...mapActions(["fetchContracts", "fetchContracts24", "fetchCompilationErrors", "fetchFlaggedContracts"]),
 
     showTable() {
       this.tableShow ? (this.tableShow = false) : (this.tableShow = true);
@@ -117,6 +132,7 @@ export default {
     await this.fetchContracts();
     await this.fetchContracts24();
     await this.fetchCompilationErrors();
+    await this.fetchFlaggedContracts();
   },
 };
 </script>
