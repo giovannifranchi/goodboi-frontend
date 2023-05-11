@@ -25,7 +25,7 @@
       <!-- TODOs: add a spinner component also here to handle the lag in fetchDetectors call ath radio button change -->
       <h3 class="pt-5">Detectors</h3>
       <div class="d-flex flex-wrap pb-5 pt-3 gy-4 gap-3">
-        <div  v-for="(detector, index) in orderDetectors" :key="index">
+        <div v-for="(detector, index) in getDetectors" :key="index">
           <DetectorComponent
             :detectorName="detector.name"
             :detectorCount="detector.count"
@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       currentDetector: "unprotected-write",
-      revStateFields: ['Unreviewed', 'FP', 'TP_Useless', 'TP_Niceish', 'TP_Explotable'],
+      revStateFields: ["Unreviewed", "FP", "TP_Useless", "TP_Niceish", "TP_Explotable"],
       revState: 0,
       showAbort: false,
       abortActive: false,
@@ -99,76 +99,76 @@ export default {
       }
     },
 
-    orderDetectors(){
+    orderDetectors() {
       if (this.getDetectors) {
-    return this.getDetectors.sort((a, b) => {
-      if (a.name < b.name) {
-        return -1;
+        return this.getDetectors.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        });
       }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
-    });
-    }
+    },
+
+    methods: {
+      //you need to move the put call in here which is triggered by the handle id emit
+      ...mapActions(["fetchDetectors", "fetchTables"]),
+
+      handleDetector(detectorName) {
+        this.currentDetector = detectorName;
+      },
+
+      logQuery(query) {
+        console.log(query.detector, query.revState);
+      },
+
+      addToPutted(id, revState) {
+        console.log(id, revState);
+        this.puttedRows.push(id);
+        this.putRev(id, revState);
+      },
+
+      putRev(id, revState) {
+        this.lastclickedID = id;
+        this.showAbort = true;
+        let abortTimeout = setTimeout(() => {
+          if (this.abortActive && id === this.lastclickedID) {
+            this.puttedRows.pop();
+            clearTimeout(abortTimeout);
+            return;
+          }
+          this.showAbort = false;
+          this.putCall(id, revState);
+        }, 5000);
+      },
+
+      putCall(id, revState) {
+        const endpoint = `http://65.108.85.188:3000/api/manualRevision/${id}/${this.currentDetector}/${revState}`;
+
+        const headers = {
+          Accept: "application/json",
+          authtoken: this.getAuthToken,
+        };
+
+        axios.put(endpoint, null, { headers }).then((res) => {
+          if (res.data.error === undefined || res.data.error === null) {
+            console.log("put success");
+          } else {
+            console.log(res.data.error);
+          }
+          this.showAbort = false;
+        });
+      },
+    },
+
+    created() {
+      this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 });
+      this.fetchDetectors(this.revState);
+    },
   },
-
-  methods: {
-    //you need to move the put call in here which is triggered by the handle id emit
-    ...mapActions(["fetchDetectors", "fetchTables"]),
-
-    handleDetector(detectorName) {
-      this.currentDetector = detectorName;
-    },
-
-    logQuery(query) {
-      console.log(query.detector, query.revState);
-    },
-
-    addToPutted(id, revState) {
-      console.log(id, revState);
-      this.puttedRows.push(id);
-      this.putRev(id, revState);
-    },
-
-    putRev(id, revState) {
-      this.lastclickedID = id;
-      this.showAbort = true;
-      let abortTimeout = setTimeout(() => {
-        if(this.abortActive && id === this.lastclickedID) {
-          this.puttedRows.pop();
-          clearTimeout(abortTimeout);
-          return;
-        }
-        this.showAbort = false;
-        this.putCall(id, revState);
-      }, 5000);
-    },
-
-    putCall(id, revState) {
-      const endpoint = `http://65.108.85.188:3000/api/manualRevision/${id}/${this.currentDetector}/${revState}`;
-
-      const headers = {
-        "Accept": "application/json",
-        "authtoken": this.getAuthToken,
-      };
-
-      axios.put(endpoint, null, { headers }).then((res) => {
-        if (res.data.error === undefined || res.data.error === null) {
-          console.log("put success");
-        } else {
-          console.log(res.data.error);
-        }
-        this.showAbort = false;
-      });
-    },
-  },
-
-  created() {
-    this.fetchDetectors(this.revState);
-    this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 });
-  },
-}
 };
 </script>
 
