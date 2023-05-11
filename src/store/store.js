@@ -14,8 +14,10 @@ const store = createStore({
             authToken: null,
             contracts: null,
             contracts24: null,
+            flaggedContracts: null,
             compilationErrors: null,
             detectors: null,
+            analysisCount: null,
             tables: null
         }
     },
@@ -38,12 +40,20 @@ const store = createStore({
             return state.user.contracts24;
         },
 
+        getFlaggedContracts(state){
+            return state.user.flaggedContracts;
+        },
+
         getCompilationErrors(state){
             return state.user.compilationErrors;
         },
 
         getDetectors(state){
             return state.user.detectors;
+        },
+
+        getAnalysisCount(state){
+            return state.user.analysisCount;
         },
 
         getTables(state){
@@ -70,12 +80,20 @@ const store = createStore({
             state.user.contracts24 = value;
         },
 
+        setFlaggedContracts(state, value){
+            state.user.flaggedContracts = value;
+        },
+
         setCompilationErrors(state, value){
             state.user.compilationErrors = value;
         },
 
         setDetectors(state, value){
             state.user.detectors = value;
+        },
+
+        setAnalysisCount(state, value){
+            state.user.analysisCount = value;
         },
 
         setTables(state, value){
@@ -158,6 +176,27 @@ const store = createStore({
             })
         },
 
+        fetchFlaggedContracts({commit}){
+            const endpoint = 'http://65.108.85.188:3000/api/contractsFlagged';
+            const headers = {
+                'Accept': 'application/json',
+                "Content-Type": "multipart/form-data",
+                'authtoken': this.state.user.authToken,
+            }
+
+            axios.get(endpoint, {headers})
+            .then((result)=>{
+                if(result.data.error){
+                    localStorage.removeItem('authToken');
+                    commit('setAuthToken', null);
+                    return;
+                }
+                const flaggedContracts = result.data;
+                commit("setFlaggedContracts", flaggedContracts);
+            })
+
+        },
+
         fetchCompilationErrors({commit}){
             let compilationErrors = null;
 
@@ -202,6 +241,28 @@ const store = createStore({
                 }
                 detectors = result.data;
                 commit("setDetectors", detectors);
+            })
+        },
+
+        fetchAnalysisCount({commit}, query){
+            const endpoint = `http://65.108.85.188:3000/api/analysisCount/${query}`;
+
+            const headers = {
+                'Accept': 'application/json',
+                "Content-Type": "multipart/form-data",
+                'authtoken': this.state.user.authToken,
+
+            }
+
+            axios.get(endpoint, {headers})
+            .then((result)=> {
+                if(result.data.error){
+                    localStorage.removeItem('authToken');
+                    commit('setAuthToken', null);
+                    return;
+                }
+                const analysisCount = result.data;
+                commit("setAnalysisCount", analysisCount);
             })
         },
 
