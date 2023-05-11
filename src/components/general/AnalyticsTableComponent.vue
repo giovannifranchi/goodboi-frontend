@@ -6,7 +6,7 @@
           <th class="id">ID</th>
           <th class="address">ADDRESS</th>
           <th class="chain">CHAIN</th>
-          <th class="record">REPORT</th>
+          <th >REPORT</th>
           <th class="flags">FLAGS</th>
           <th class="time">LAST TX</th>
           <th class="time">AN DATE</th>
@@ -15,8 +15,8 @@
       </thead>
       <tbody>
         <tr v-for="(row, index) in info" :key="index">
-          <td class="id">{{ row.ID }}</td>
-          <td class="address">
+          <td >{{ row.ID }}</td>
+          <td >
             <div class="d-flex flex-column align-items-center">
               <a :href="createScannerLink(row.chain, row.address, true)" target="_blank">
                 <img src="../../assets/img/visual-studio.png" alt="VSCode" class="ms-logo">
@@ -26,27 +26,27 @@
               </a>
             </div>
           </td>
-          <td class="chain">{{ handleChain(row.chain) }}</td>
+          <td >{{ handleChain(row.chain) }}</td>
           <td class="record" v-html="reportHighlight(row.report)"></td>
-          <td class="flags">
+          <td>
             <div class="d-flex flex-column">
               <span v-html="getPF(row.PF, row.RPF)"></span>
               <span v-html="getBF(row.BF, row.RBF)"></span>
             </div>
           </td>
-          <td class="text-start time">
+          <td class="text-start">
             <div class="d-flex flex-column align-items-center">
               <span>{{ handleDate(row.lastTX) }}</span>
               <span>{{ handleTime(row.lastTX) }}</span>
             </div>
           </td>
-          <td class="text-start time">
+          <td class="text-start ">
             <div class="d-flex flex-column align-items-center">
               <span>{{ handleDate(row.anDate) }}</span>
               <span>{{ handleTime(row.anDate) }}</span>
             </div>
           </td>
-          <td class="set">
+          <td >
             <ManualReviewComponent :detector-name="currentDetector" :id="row.ID" @pass-id="emitId"/>
           </td>
         </tr>
