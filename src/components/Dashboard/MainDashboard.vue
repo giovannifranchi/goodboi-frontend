@@ -2,7 +2,6 @@
   <main>
     <div class="container">
       <StatsComponentVue class="py-5" />
-
       <!-- Rev State radios -->
       <h3>Revision State</h3>
       <div class="row row-cols-5 w-50">
@@ -39,7 +38,7 @@
         <div class="col-8 d-flex justify-content-between">
           <h4>Detector: {{ currentDetector }}</h4>
           <!-- ADD: format number method -->
-          <h4>Analyzed: {{ getAnalysisCount.count }}</h4>
+          <h4>Analyzed: {{ formatNumber(getAnalysisCount.count) }} ({{ getDetectorAnalysisPercentage }}%)</h4>
         </div>
       </div>
     </div>
@@ -90,7 +89,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getDetectors", "getTables", "getAuthToken", "getAnalysisCount"]),
+    ...mapGetters(["getDetectors", "getTables", "getAuthToken", "getAnalysisCount", "getFlaggedContracts", "getCompilationErrors"]),
 
     filteredTables() {
       if (this.puttedRows.length <= 0) {
@@ -99,6 +98,29 @@ export default {
         return this.getTables.filter((table) => {
           return !this.puttedRows.includes(table.ID);
         });
+      }
+    },
+
+    getTotalErrors(){
+      if(this.getCompilationErrors){
+        return this.getCompilationErrors.reduce((acc, curr)=> acc + curr.count, 0);
+      }
+    },
+
+    getTotalFlagged(){
+      if(this.getFlaggedContracts){
+        const totalFlagged = [];
+        for(let flagged in this.getFlaggedContracts){
+          totalFlagged.push(this.getFlaggedContracts[flagged]);
+        }
+        return totalFlagged.reduce((acc, curr)=> acc + curr);
+      }
+    },
+
+    getDetectorAnalysisPercentage(){
+      if(this.getFlaggedContracts && this.getCompilationErrors && this.getAnalysisCount){
+        const totalErrors = this.getTotalErrors + this.getTotalFlagged;
+        return ((this.getAnalysisCount.count * 100) / totalErrors).toFixed(2);
       }
     },
 
@@ -119,7 +141,7 @@ export default {
 
   methods: {
     //you need to move the put call in here which is triggered by the handle id emit
-    ...mapActions(["fetchDetectors", "fetchTables", "fetchAnalysisCount"]),
+    ...mapActions(["fetchDetectors", "fetchTables", "fetchAnalysisCount", "fetchCompilationErrors"]),
 
     handleDetector(detectorName) {
       this.currentDetector = detectorName;
@@ -149,6 +171,16 @@ export default {
       }, 5000);
     },
 
+    formatNumber(number){
+      if(number){
+        const formattedNumber = number.toLocaleString('en-US', {
+        useGrouping: true,
+        minimumFractionDigits: 0
+      }).replace(/,/g, "'"); //Remove the replace if you want separators at the bottom
+      return formattedNumber;
+      }
+    },
+
     putCall(id, revState) {
       const endpoint = `http://65.108.85.188:3000/api/manualRevision/${id}/${this.currentDetector}/${revState}`;
 
@@ -172,6 +204,7 @@ export default {
     this.fetchDetectors(this.revState);
     this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 });
     this.fetchAnalysisCount(this.currentDetector);
+    this.fetchCompilationErrors();
   },
 }
 ;

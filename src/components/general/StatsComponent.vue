@@ -102,10 +102,13 @@ export default {
     },
 
     getTotalErrors() {
-      return this.getContractNumer + this.getContracts24;
+      if(this.getCompilationErrors){
+        return this.getCompilationErrors.reduce((acc, curr)=> acc + curr.count, 0);
+      }
     },
 
     getErrorsPercentage() {
+      //TODO refactor required
       let totalErrors = 0;
       if (!this.getCompilationErrors || this.getCompilationErrors.length === 0) {
         return 0;
@@ -126,7 +129,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["fetchContracts", "fetchContracts24", "fetchCompilationErrors", "fetchFlaggedContracts"]),
+    ...mapActions(["fetchContracts", "fetchContracts24", "fetchFlaggedContracts"]),
 
     showTable() {
       this.tableShow ? this.tableShow = false : this.tableShow = true;
@@ -146,7 +149,6 @@ export default {
   async created() {
     await this.fetchContracts();
     await this.fetchContracts24();
-    await this.fetchCompilationErrors();
     await this.fetchFlaggedContracts();
   },
 };
