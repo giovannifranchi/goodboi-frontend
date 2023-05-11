@@ -35,7 +35,7 @@
           />
         </div>
       </div>
-
+      <h4>Load not stored: XX(Y%)</h4>
       <div class="row py-3">
         <div class="col">
           <AnalyticsTableComponent

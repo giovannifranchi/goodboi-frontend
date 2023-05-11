@@ -4,49 +4,49 @@
       <thead>
         <tr>
           <th class="id">ID</th>
-          <th>ADDRESS</th>
-          <th>CHAIN</th>
+          <th class="address">ADDRESS</th>
+          <th class="chain">CHAIN</th>
           <th class="record">REPORT</th>
-          <th >FLAGS</th>
-          <th>LAST TX</th>
-          <th>AN DATE</th>
-          <th>SET MANUAL REVIEW</th>
+          <th class="flags">FLAGS</th>
+          <th class="time">LAST TX</th>
+          <th class="time">AN DATE</th>
+          <th class="set">SET M R</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(row, index) in info" :key="index">
           <td class="id">{{ row.ID }}</td>
-          <td>
+          <td class="address">
             <div class="d-flex flex-column align-items-center">
               <a :href="createScannerLink(row.chain, row.address, true)" target="_blank">
-                <img src="../../assets/img/visual-studio.png" alt="">
+                <img src="../../assets/img/visual-studio.png" alt="VSCode" class="ms-logo">
               </a>
               <a :href="createScannerLink(row.chain, row.address)" target="_blank">
                 {{ renderContract(row.address) }}
               </a>
             </div>
           </td>
-          <td>{{ handleChain(row.chain) }}</td>
+          <td class="chain">{{ handleChain(row.chain) }}</td>
           <td class="record" v-html="reportHighlight(row.report)"></td>
-          <td >
+          <td class="flags">
             <div class="d-flex flex-column">
               <span v-html="getPF(row.PF, row.RPF)"></span>
               <span v-html="getBF(row.BF, row.RBF)"></span>
             </div>
           </td>
-          <td class="text-start">
+          <td class="text-start time">
             <div class="d-flex flex-column align-items-center">
               <span>{{ handleDate(row.lastTX) }}</span>
               <span>{{ handleTime(row.lastTX) }}</span>
             </div>
           </td>
-          <td class="text-start">
+          <td class="text-start time">
             <div class="d-flex flex-column align-items-center">
               <span>{{ handleDate(row.anDate) }}</span>
               <span>{{ handleTime(row.anDate) }}</span>
             </div>
           </td>
-          <td>
+          <td class="set">
             <ManualReviewComponent :detector-name="currentDetector" :id="row.ID" @pass-id="emitId"/>
           </td>
         </tr>
@@ -179,12 +179,28 @@ export default {
       text-align: left;
     }
   }
-  .record {
-    width: 40%;
-  }
-
+  
   .id {
-    width: auto;
+    width: 4.375rem;
+  }
+  .ms-logo {
+    width: 2rem;
+    height: 2rem;
+  }
+  .address {
+    width: 6.25rem;
+  }
+  .chain {
+    width: 4.375rem;
+  }
+  .flags {
+    width: 4.375rem;
+  }
+  .time{
+    width: 5rem;
+  }
+  .set {
+    width: 110px;
   }
 }
 </style>
