@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="btn btn-primary" @click="handleClick()">
+  <button type="button" class="btn ms-btn" @click="handleClick()">
     {{ detectorName }}
     <span class="badge text-bg-secondary">{{ detectorCount }}</span>
   </button>
@@ -32,4 +32,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@use '../../assets/partials/variables' as *;
+
+.ms-btn {
+  background-color: $secondary-blue;
+  color: #fff;
+}
+
+</style>

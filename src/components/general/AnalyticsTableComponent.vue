@@ -1,6 +1,6 @@
 <template>
   <div class="table-wrapper">
-    <table class="table table-bordered">
+    <table class="table ">
       <thead>
         <tr>
           <th class="id">ID</th>
@@ -160,10 +160,16 @@ export default {
 
 .table-wrapper {
 
+  a{
+    color: inherit;
+  }
+
   table {
     width: 100%;
     table-layout: fixed;
-    background-color: $table-color;
+    background-color: #b2d5d5bf;
+    border-color: $primary-blue;
+    border-radius: 10px;
   }
   th,
   td {

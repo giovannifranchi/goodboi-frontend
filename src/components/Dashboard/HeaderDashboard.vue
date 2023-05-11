@@ -37,7 +37,6 @@ export default {
 @use "../../assets/partials/variables" as *;
 
 header {
-  background-color: $header-color;
   .user-container {
     img {
       width: 50px;

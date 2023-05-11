@@ -1,12 +1,12 @@
 <template>
   <div class="d-flex flex-column gap-3 align-items-center" v-if="!showTPButtons">
-    <button type="button" class="btn btn-danger w-100 py-3" @click="putManualReview(1)">FP</button>
-    <button type="button" class="btn btn-success w-100" @click="showTPButtons = true">TP</button>
+    <button type="button" class="btn dark-red  w-100 py-3" @click="putManualReview(1)">FP</button>
+    <button type="button" class="btn blue w-100" @click="showTPButtons = true">TP</button>
   </div>
   <div class="d-flex flex-column gap-3 align-items-center" v-else>
     <button
       type="button"
-      class="btn btn-danger w-100"
+      class="btn light-blue w-100"
       @click="
         () => {
           showTPButtons = false;
@@ -18,7 +18,7 @@
     </button>
     <button
       type="button"
-      class="btn btn-warning w-100"
+      class="btn mid-blue w-100"
       @click="
         () => {
           showTPButtons = false;
@@ -30,7 +30,7 @@
     </button>
     <button
       type="button"
-      class="btn btn-success w-100"
+      class="btn blue  w-100"
       @click="
         () => {
           showTPButtons = false;
@@ -82,4 +82,26 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@use '../../assets/partials/variables' as *;
+
+.dark-red{
+  background-color: $dark-red ;
+  color: #fff;
+}
+
+.blue {
+  background-color: $secondary-blue;
+  color: #fff;
+}
+
+.mid-blue{
+  background-color: $tertiary-blue;
+  color: #fff;
+}
+
+.light-blue{
+  background-color: $dark-red;
+  color:#fff;
+}
+</style>

@@ -65,6 +65,6 @@ export default {
 @use "../assets/partials/variables" as *;
 .wrapper {
   height: 100vh;
-  background-color: $header-color;
+  background-color: $primary-blue;
 }
 </style>

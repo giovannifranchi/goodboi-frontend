@@ -8,7 +8,7 @@
         <div class="col d-flex justify-content-center" v-for="(radio, index) in revStateFields" :key="index">
           <div class="form-check">
             <input
-              class="form-check-input"
+              class="form-check-input ms-radio"
               type="radio"
               name="flexRadioDefault"
               :id="`rev${index}`"
@@ -215,8 +215,11 @@ export default {
 <style lang="scss" scoped>
 @use "../../assets/partials/variables" as *;
 
-main {
-  background-color: $header-color;
+.ms-radio {
+  &:checked{
+    background-color: $tertiary-blue;
+    border: $secondary-blue;
+  }
 }
 
 .ms-unvisible {

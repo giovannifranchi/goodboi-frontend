@@ -7,7 +7,7 @@
     </div>
     <div class="col-4">
       <ContractsComponent :contractsNumber="getContractNumer" :contracts24Number="getContracts24" />
-      <button type="button" class="btn btn-danger w-auto d-flex align-items-center" @click="showTable" :class="{active: tableShow}"><h4 class="fw-light mb-0">Flagged: <strong>{{ formatNumber(getFlaggedNumber )}}</strong></h4></button>
+      <button type="button" class="btn ms-blue w-auto d-flex align-items-center" @click="showTable" :class="{active: tableShow}"><h4 class="fw-light mb-0">Flagged: <strong>{{ formatNumber(getFlaggedNumber )}}</strong></h4></button>
     </div>
     <div class="col-4">
       <!-- Now it is always visible to make it hide put position absolute and add this :class="tableShow ? 'show' : 'hide'" -->
@@ -62,6 +62,7 @@ export default {
         legend: {
           show: false,
         },
+        colors: ['#e9d8a6', '#ee9b00','#bb3e03', '#9b2226', '#9b2226']
       };
     },
 
@@ -107,6 +108,7 @@ export default {
 
     getErrorsPercentage() {
       //TODO refactor required
+      //TODO overall sui flaggati e non sul totale contracts
       let totalErrors = 0;
       if (!this.getCompilationErrors || this.getCompilationErrors.length === 0) {
         return 0;
@@ -153,6 +155,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '../../assets/partials/variables' as *;
+
+.ms-blue{
+  background-color: $secondary-blue;
+  color: #fff;
+}
 .show {
   right: 0;
   opacity: 1;
