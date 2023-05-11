@@ -1,28 +1,28 @@
 <template>
   <div class="row py-5 position-relative overflow-hidden justify-content-between">
     <div class="col-4">
-      <VueApexCharts :type="'pie'" :series="getSeries" :options="getOptions" />
+      <h3 class="text-center">{{ !tableShow ? 'Total' : 'Flagged' }}</h3>
+      <VueApexCharts :type="'pie'" :series="getSeries" :options="getOptions" v-if="!tableShow"/>
+      <VueApexCharts :type="'pie'" :series="getFlaggedSeries" :options="getOptions" v-else/>
     </div>
-    <div class="col-7" :class="tableShow ? 'show' : 'hide'">
-      <!-- Now it is always visible to make it hide put position absolute -->
-      <ErrorTableComponent :errorDetails="getCompilationErrors" :totalErrors="getTotalErrors" :errorsPercentage="getErrorsPercentage"/>
+    <div class="col-7">
+      <!-- Now it is always visible to make it hide put position absolute and add this :class="tableShow ? 'show' : 'hide'" -->
+      <ErrorTableComponent
+        :errorDetails="getCompilationErrors"
+        :totalErrors="getTotalErrors"
+        :errorsPercentage="getErrorsPercentage"
+      />
     </div>
   </div>
   <div class="row mb-5">
     <div class="col-4">
       <ContractsComponent :contractsNumber="getContractNumer" :contracts24Number="getContracts24" />
-      <button type="button" class="btn btn-danger disabled" @click="showTable">
-       Flagged: {{ getFlaggedNumber }}
-      </button>
-      
-      
+      <button type="button" class="btn btn-danger" @click="showTable" :class="{active: tableShow}">Flagged: {{ getFlaggedNumber }}</button>
     </div>
   </div>
 </template>
 
 <script>
-
-
 import VueApexCharts from "vue3-apexcharts";
 import ContractsComponent from "./ContractsComponent.vue";
 import ErrorTableComponent from "./ErrorTableComponent.vue";
@@ -67,8 +67,14 @@ export default {
       };
     },
 
-    getFlaggedOptions(){
-      
+    getFlaggedSeries(){
+      if(this.getFlaggedContracts){
+        const numbers = [];
+        for(let flagged in this.getFlaggedContracts){
+          numbers.push(this.getFlaggedContracts[flagged]);
+        }
+        return numbers;
+      }
     },
 
     getContractNumer() {
@@ -85,17 +91,17 @@ export default {
       }
     },
 
-    getFlaggedNumber(){
-      if(this.getFlaggedContracts){
+    getFlaggedNumber() {
+      if (this.getFlaggedContracts) {
         const totalNumbers = [];
-        for(let flagged in this.getFlaggedContracts){
+        for (let flagged in this.getFlaggedContracts) {
           totalNumbers.push(this.getFlaggedContracts[flagged]);
         }
-        return totalNumbers.reduce((acc, curr)=> acc + curr);
+        return totalNumbers.reduce((acc, curr) => acc + curr);
       }
     },
 
-    getTotalErrors(){
+    getTotalErrors() {
       return this.getContractNumer + this.getContracts24;
     },
 
@@ -112,7 +118,6 @@ export default {
           if (this.getContractNumer === 0) {
             return 0;
           } else {
-            
             return ((totalErrors * 100) / this.getContractNumer).toFixed(2);
           }
         }
@@ -124,7 +129,7 @@ export default {
     ...mapActions(["fetchContracts", "fetchContracts24", "fetchCompilationErrors", "fetchFlaggedContracts"]),
 
     showTable() {
-      this.tableShow ? (this.tableShow = false) : (this.tableShow = true);
+      this.tableShow ? this.tableShow = false : this.tableShow = true;
     },
   },
 
