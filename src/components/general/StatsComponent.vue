@@ -1,23 +1,21 @@
 <template>
-  <div class="row py-5 position-relative overflow-hidden justify-content-between">
+  <div class="row py-5 position-relative overflow-hidden justify-content-between align-items-center">
     <div class="col-4">
       <h3 class="text-center">{{ !tableShow ? 'Total' : 'Flagged' }}</h3>
       <VueApexCharts :type="'pie'" :series="getSeries" :options="getOptions" v-if="!tableShow"/>
       <VueApexCharts :type="'pie'" :series="getFlaggedSeries" :options="getOptions" v-else/>
     </div>
-    <div class="col-7">
+    <div class="col-4">
+      <ContractsComponent :contractsNumber="getContractNumer" :contracts24Number="getContracts24" />
+      <button type="button" class="btn btn-danger w-auto d-flex align-items-center" @click="showTable" :class="{active: tableShow}"><h4 class="fw-light mb-0">Flagged: <strong>{{ formatNumber(getFlaggedNumber )}}</strong></h4></button>
+    </div>
+    <div class="col-4">
       <!-- Now it is always visible to make it hide put position absolute and add this :class="tableShow ? 'show' : 'hide'" -->
       <ErrorTableComponent
         :errorDetails="getCompilationErrors"
         :totalErrors="getTotalErrors"
         :errorsPercentage="getErrorsPercentage"
       />
-    </div>
-  </div>
-  <div class="row mb-5">
-    <div class="col-4">
-      <ContractsComponent :contractsNumber="getContractNumer" :contracts24Number="getContracts24" />
-      <button type="button" class="btn btn-danger" @click="showTable" :class="{active: tableShow}">Flagged: <strong>{{ formatNumber(getFlaggedNumber )}}</strong></button>
     </div>
   </div>
 </template>

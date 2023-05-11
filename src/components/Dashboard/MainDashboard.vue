@@ -24,21 +24,22 @@
       <!-- TODOs: add a spinner component also here to handle the lag in fetchDetectors call ath radio button change -->
       <h3 class="pt-5">Detectors</h3>
       <div class="d-flex flex-wrap pb-5 pt-3 gy-4 gap-3">
-        <div v-for="(detector, index) in orderDetectors" :key="index">
+        <div v-for="(detector, index) in orderDetectors" :key="index" class="flex-grow-1">
           <DetectorComponent
             :detectorName="detector.name"
             :detectorCount="detector.count"
             @handleClick="handleDetector"
             @click="()=>{fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 }); fetchAnalysisCount(this.currentDetector)}"
             :class="currentDetector === detector.name ? 'active' : ''"
+            class="w-100"
           />
         </div>
       </div>
-      <div class="row">
-        <div class="col-8 d-flex justify-content-between">
-          <h4>Detector: {{ currentDetector }}</h4>
+      <div class="row justify-content-center">
+        <div class="col-6 d-flex justify-content-between">
+          <h5 class="fw-light">Detector: {{ currentDetector }}</h5>
           <!-- ADD: format number method -->
-          <h4>Analyzed: {{ getAnalysisCount ? formatNumber(getAnalysisCount.count) : ''}} ({{ getDetectorAnalysisPercentage }}%)</h4>
+          <h5 class="fw-light">Analyzed: {{ getAnalysisCount ? formatNumber(getAnalysisCount.count) : ''}} ({{ getDetectorAnalysisPercentage }}%)</h5>
         </div>
       </div>
     </div>

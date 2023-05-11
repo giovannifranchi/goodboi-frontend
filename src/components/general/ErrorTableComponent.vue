@@ -63,10 +63,11 @@ export default {
 <style lang="scss" scoped>
 
 .ms-table{
-  background-color: rgb(157, 156, 156);
+  // background-color: rgb(157, 156, 156);
+  background-color: transparent;
   width: 100%;
   
-  border-radius: 25px;
+  border-radius: 15px;
   .ms-border {
     border-bottom: 2px solid #fff;
   }

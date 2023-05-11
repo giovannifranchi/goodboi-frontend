@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column">
-    <h4><span class="badge text-bg-primary">Contracts:  {{ formatContracts(contractsNumber) }}</span></h4>
-    <h4><span class="badge text-bg-primary">Contracts last 24h: {{ formatContracts(contracts24Number) }}</span></h4>
+    <h4 class="fw-light">Contracts: <strong>{{ formatContracts(contractsNumber) }}</strong></h4>
+    <h4 class="fw-light">Last 24h: {{ formatContracts(contracts24Number) }}</h4>
   </div>
 </template>
 

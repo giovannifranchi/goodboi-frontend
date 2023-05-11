@@ -3,16 +3,16 @@
     <div class="container py-3 gap-3 d-flex justify-content-between align-items-center">
       <a class="navbar-brand  d-flex" >
         <img
-          src="../../assets/img/logo.png"
+          src="../../assets/img/doggo.svg"
           alt="Logo"
           width="100"
 
-          class="d-inline-block align-text-center"
+          class="d-inline-block align-text-center pb-2"
         />
         <h3 class="align-self-end">GoodBoi</h3>
       </a>
 
-      <div class="user-container align-self-start">
+      <div class="user-container align-self-end">
         <h6>{{ getName }}</h6>
       </div>
     </div>
@@ -43,6 +43,7 @@ header {
       width: 50px;
       height: 50px;
       border-radius: 50%;
+      fill: #fff;
     }
   }
 }
