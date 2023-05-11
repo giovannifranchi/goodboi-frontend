@@ -1,10 +1,11 @@
 <template>
-  <div class="row py-5 position-relative overflow-hidden">
-    <div class="col-3">
+  <div class="row py-5 position-relative overflow-hidden justify-content-between">
+    <div class="col-4">
       <VueApexCharts :type="'pie'" :series="getSeries" :options="getOptions" />
     </div>
-    <div class="col-7 position-absolute" :class="tableShow ? 'show' : 'hide'">
-      <ErrorTableComponent :errorDetails="getCompilationErrors" />
+    <div class="col-7" :class="tableShow ? 'show' : 'hide'">
+      <!-- Now it is always visible to make it hide put position absolute -->
+      <ErrorTableComponent :errorDetails="getCompilationErrors" :totalErrors="getTotalErrors" :errorsPercentage="getErrorsPercentage"/>
     </div>
   </div>
   <div class="row mb-5">
@@ -13,6 +14,7 @@
       <button type="button" class="btn btn-danger disabled" @click="showTable">
        Flagged: {{ getErrorsPercentage }}%
       </button>
+      
     </div>
   </div>
 </template>
@@ -76,6 +78,10 @@ export default {
       } else {
         return numbers.reduce((acc, curr) => acc + curr);
       }
+    },
+
+    getTotalErrors(){
+      return this.getContractNumer + this.getContracts24;
     },
 
     getErrorsPercentage() {

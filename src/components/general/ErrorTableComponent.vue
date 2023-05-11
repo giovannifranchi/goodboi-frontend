@@ -1,18 +1,24 @@
 <template>
 
-  <table class="table bg-black text-white">
+  <table class="ms-table">
     <thead>
-        <tr>
-            <th scope="col">Error Type</th>
-            <th scope="col">Occurencies</th>
+        <tr class="ms-border">
+            <th class="px-3 py-2">Error Type</th>
+            <th class="px-3 py-2">Occurencies</th>
         </tr>
     </thead>
     <tbody>
-        <tr v-for="(error, index) in errorDetails" :key="index">
-            <td>{{ error.error }}</td>
-            <td>{{ error.count }}</td>
+        <tr v-for="(error, index) in errorDetails" :key="index" class="ms-border">
+            <td class="px-3 py-2">{{ error.error }}</td>
+            <td class="px-3 py-2">{{ error.count }}</td>
         </tr>
     </tbody>
+    <tfoot>
+      <tr>
+          <td class="px-3 py-2"><strong>Overall</strong></td>
+          <td class="px-3 py-2"><strong>{{ formatErrors(totalErrors) }} ({{ errorsPercentage }}%)</strong></td>
+        </tr>
+    </tfoot>
   </table>
 
 
@@ -28,8 +34,42 @@ export default {
       type: Array,
       required: true,
     },
+
+    totalErrors: {
+      type: Number,
+      required: true,
+    },
+
+    errorsPercentage: {
+      type: Number,
+      required: true
+    }
+  },
+
+  methods: {
+    formatErrors(number){
+      if(number){
+        const formattedNumber = number.toLocaleString('en-US', {
+        useGrouping: true,
+        minimumFractionDigits: 0
+      }).replace(/,/g, "'"); //Remove the replace if you want separators at the bottom
+      return formattedNumber;
+      }
+    }
   }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+.ms-table{
+  background-color: rgb(157, 156, 156);
+  width: 100%;
+  
+  border-radius: 25px;
+  .ms-border {
+    border-bottom: 2px solid #fff;
+  }
+}
+
+</style>

@@ -23,11 +23,13 @@ export default {
 
   methods: {
     formatContracts(number){
-      const formattedNumber = number.toLocaleString('en-US', {
+      if(number){
+        const formattedNumber = number.toLocaleString('en-US', {
         useGrouping: true,
         minimumFractionDigits: 0
       }).replace(/,/g, "'"); //Remove the replace if you want separators at the bottom
       return formattedNumber;
+      }
     }
   }
 };
