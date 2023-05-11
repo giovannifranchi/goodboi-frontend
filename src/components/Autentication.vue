@@ -2,7 +2,7 @@
   <div class="d-flex align-items-center justify-content-center wrapper flex-column py-5">
     <!-- <AutoTypingComponent /> -->
     <div class="w-25">
-      <img src="../assets/img/doggo.png" alt="logo" class="img-fluid">
+      <img src="../assets/img/logo.png" alt="logo" class="img-fluid">
     </div>
     <h1 class="mb-5">GoodBoi</h1>
     <form @submit.prevent="logintry(query)">

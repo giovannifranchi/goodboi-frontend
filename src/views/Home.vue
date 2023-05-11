@@ -7,7 +7,7 @@
 import { mapGetters, mapMutations } from 'vuex';
 import Autentication from '../components/Autentication.vue';
 import Dashborad from '../components/Dashborad.vue';
-import { onMounted } from 'vue';
+
 
     export default {
         name: 'Home',

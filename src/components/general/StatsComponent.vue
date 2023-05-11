@@ -1,22 +1,24 @@
 <template>
   <div class="row py-5 position-relative overflow-hidden">
-    <div class="col-4">
+    <div class="col-3">
       <VueApexCharts :type="'pie'" :series="getSeries" :options="getOptions" />
     </div>
+    <div class="col-7 position-absolute" :class="tableShow ? 'show' : 'hide'">
+      <ErrorTableComponent :errorDetails="getCompilationErrors" />
+    </div>
+  </div>
+  <div class="row mb-5">
     <div class="col-4">
       <ContractsComponent :contractsNumber="getContractNumer" :contracts24Number="getContracts24" />
       <button type="button" class="btn btn-danger disabled" @click="showTable">
-        Errors: {{ getErrorsPercentage }}%
+       Flagged: {{ getErrorsPercentage }}%
       </button>
-    </div>
-    <div class="col-4 position-absolute" :class="tableShow ? 'show' : 'hide'">
-      <ErrorTableComponent :errorDetails="getCompilationErrors" />
     </div>
   </div>
 </template>
 
 <script>
-// TODOS: add a spinner component and as long as the getters return 0 leave the spinner
+
 
 import VueApexCharts from "vue3-apexcharts";
 import ContractsComponent from "./ContractsComponent.vue";

@@ -1,19 +1,19 @@
 <template>
   <header>
     <div class="container py-3 gap-3 d-flex justify-content-between align-items-center">
-      <a class="navbar-brand " href="#">
+      <a class="navbar-brand  d-flex" >
         <img
-          src="../../assets/img/doggo.png"
+          src="../../assets/img/logo.png"
           alt="Logo"
           width="100"
 
           class="d-inline-block align-text-center"
         />
-        <h3>GoodBoi</h3>
+        <h3 class="align-self-end">GoodBoi</h3>
       </a>
 
       <div class="user-container align-self-start">
-        <h6>User: {{ getName }}</h6>
+        <h6>{{ getName }}</h6>
       </div>
     </div>
   </header>
