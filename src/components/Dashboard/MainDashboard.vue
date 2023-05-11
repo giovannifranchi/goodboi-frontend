@@ -30,12 +30,18 @@
             :detectorName="detector.name"
             :detectorCount="detector.count"
             @handleClick="handleDetector"
-            @click="fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 })"
+            @click="()=>{fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 }); fetchAnalysisCount(this.currentDetector)}"
             :class="currentDetector === detector.name ? 'active' : ''"
           />
         </div>
       </div>
-      <h4>Load not stored: XX(Y%)</h4>
+      <div class="row">
+        <div class="col-8 d-flex justify-content-between">
+          <h4>Detector: {{ currentDetector }}</h4>
+          <!-- ADD: format number method -->
+          <h4>Analyzed: {{ getAnalysisCount.count }}</h4>
+        </div>
+      </div>
     </div>
     <AnalyticsTableComponent
             :info="filteredTables"
@@ -84,7 +90,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getDetectors", "getTables", "getAuthToken"]),
+    ...mapGetters(["getDetectors", "getTables", "getAuthToken", "getAnalysisCount"]),
 
     filteredTables() {
       if (this.puttedRows.length <= 0) {
@@ -113,7 +119,7 @@ export default {
 
   methods: {
     //you need to move the put call in here which is triggered by the handle id emit
-    ...mapActions(["fetchDetectors", "fetchTables"]),
+    ...mapActions(["fetchDetectors", "fetchTables", "fetchAnalysisCount"]),
 
     handleDetector(detectorName) {
       this.currentDetector = detectorName;
@@ -165,6 +171,7 @@ export default {
   created() {
     this.fetchDetectors(this.revState);
     this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 });
+    this.fetchAnalysisCount(this.currentDetector);
   },
 }
 ;
