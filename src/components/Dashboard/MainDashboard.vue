@@ -29,7 +29,6 @@
         <AtomSpinner :size="200" color="#fff" />
       </div>
       <div class="d-flex flex-wrap pb-5 pt-3 gy-4 gap-3" v-else>
-        <div v-for="(detector, index) in orderDetectors" :key="index" class="flex-grow-1">
           <DetectorComponent
             :detectorName="detector.name"
             :detectorCount="detector.count"
@@ -41,9 +40,9 @@
               }
             "
             :class="currentDetector === detector.name ? 'active' : ''"
-            class="w-100"
+            class="flex-grow-1"
+            v-for="(detector, index) in orderDetectors" :key="index"
           />
-        </div>
       </div>
 
       <div class="row justify-content-center">
