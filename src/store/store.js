@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
 import { useToast } from "vue-toastification";
 import axios from "axios";
-import login from "../../api/login";
+import Login from "../../api/login";
 import Contracts from "../../api/Contracts";
 import CompilationErrors from "../../api/CompilationErrors";
 import Detectors from "../../api/Detectors";
@@ -12,6 +12,7 @@ const toast = useToast();
 
 const store = createStore({
   state: {
+
     user: {
       username: null,
       authToken: null,
@@ -26,6 +27,7 @@ const store = createStore({
   },
 
   getters: {
+
     getUsername(state) {
       return state.user.username;
     },
@@ -64,6 +66,7 @@ const store = createStore({
   },
 
   mutations: {
+
     setUsername(state, value) {
       state.user.username = value;
     },
@@ -104,7 +107,7 @@ const store = createStore({
   actions: {
     async login({ commit }, query) {
       try {
-        const response = await login(query);
+        const response = await Login.access(query);
         if (response.error) {
           throw new Error(response.error);
         }
