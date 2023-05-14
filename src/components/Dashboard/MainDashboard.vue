@@ -16,7 +16,11 @@
               :checked="index === 0"
               v-model="revState"
               :value="index"
-              @change="fetchDetectors(revState)"
+              @change="()=>{
+                revState = index;
+                isTablesBusy = true;
+                fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 }).then(()=>isTablesBusy=false);
+              }"
             />
             <label class="form-check-label" :for="`rev${index}`">{{ radio }}</label>
           </div>
@@ -118,6 +122,10 @@ export default {
       "getCompilationErrors",
     ]),
 
+    getRevState(){
+      return this.revState;
+    },
+
     filteredTables() {
       if (this.puttedRows.length <= 0) {
         return this.getTables;
@@ -159,7 +167,6 @@ export default {
   },
 
   methods: {
-    //you need to move the put call in here which is triggered by the handle id emit
     ...mapActions(["fetchDetectors", "fetchTables", "fetchAnalysisCount", "fetchCompilationErrors"]),
 
     handleDetector(detectorName) {

@@ -1,24 +1,24 @@
 <template>
   <button type="button" class="btn ms-btn" @click="handleClick()">
     {{ detectorName }}
-    <span class="badge text-bg-secondary" v-if="isBusy"><SemipolarSpinner :size="20" color="#fff"/></span>
+    <span class="badge text-bg-secondary" v-if="isBusy"><AtomSpinner :size="20" color="#fff" /></span>
     <span class="badge text-bg-secondary" v-else>{{ detectorCount }}</span>
   </button>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import {SemipolarSpinner} from 'epic-spinners';
+import { AtomSpinner } from "epic-spinners";
 import axios from "axios";
 
 export default {
   name: "DetectorComponent",
 
-  data(){
+  data() {
     return {
       isBusy: true,
       detectorCount: null,
-    }
+    };
   },
 
   props: {
@@ -33,7 +33,7 @@ export default {
     },
   },
 
-  components: {SemipolarSpinner},
+  components: { AtomSpinner },
 
   emits: ["handle-click"],
 
@@ -45,18 +45,29 @@ export default {
     handleClick() {
       this.$emit("handle-click", this.detectorName);
     },
+
+    async getDetectorCount() {
+      const endpoint = `${import.meta.env.VITE_BASE_URI}/api/hitscount/${this.detectorName}/${this.revState}`;
+      const headers = {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+        authtoken: this.getAuthToken,
+      };
+      const response = await axios.get(endpoint, { headers });
+      this.detectorCount = response.data.count;
+      this.isBusy = false;
+    },
   },
 
-  async created() {
-    const endpoint = `${import.meta.env.VITE_BASE_URI}/api/hitscount/${this.detectorName}/${this.revState}`;
-    const headers = {
-      Accept: "application/json",
-      "Content-Type": "multipart/form-data",
-      authtoken: this.getAuthToken,
-    };
-    const response = await axios.get(endpoint, {headers});
-    this.detectorCount = response.data.count;
-    this.isBusy = false;
+  watch: {
+    revState(newValue){
+      this.isBusy = true;
+      this.getDetectorCount();
+    }
+  },
+
+  created() {
+    this.getDetectorCount();
   },
 };
 </script>
