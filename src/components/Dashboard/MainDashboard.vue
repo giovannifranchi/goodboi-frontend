@@ -26,7 +26,8 @@
           </div>
         </div>
       </div>
-      <!-- TODOs: add a spinner component also here to handle the lag in fetchDetectors call ath radio button change -->
+
+
       <h3 class="pt-5">Detectors</h3>
 
       <div v-if="isDetectorBusy">
@@ -53,7 +54,8 @@
         <div class="col-6 d-flex justify-content-between">
           <h5 class="fw-light">Detector: {{ currentDetector }}</h5>
           <!-- ADD: format number method -->
-          <h5 class="fw-light">
+          <h5 v-if="isAnalysisBusy"><AtomSpinner :size="50" color="#fff"/></h5>
+          <h5 class="fw-light" v-else>
             Analyzed: {{ getAnalysisCount ? formatNumber(getAnalysisCount.count) : "" }} ({{
               getDetectorAnalysisPercentage
             }}%)
@@ -105,6 +107,7 @@ export default {
       revState: 0,
       isDetectorBusy: true,
       isTablesBusy: true,
+      isAnalysisBusy: true,
       showAbort: false,
       abortActive: false,
       lastclickedID: "",
@@ -227,7 +230,7 @@ export default {
   created() {
     this.fetchDetectors().then(() => (this.isDetectorBusy = false));
     this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 }).then(()=>this.isTablesBusy = false);
-    this.fetchAnalysisCount(this.currentDetector);
+    this.fetchAnalysisCount(this.currentDetector).then(()=>this.isAnalysisBusy = false);
     this.fetchCompilationErrors();
   },
 };
