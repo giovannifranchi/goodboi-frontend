@@ -157,14 +157,15 @@ const store = createStore({
       commit("setCompilationErrors", response);
     },
 
-    async fetchDetectors({ commit }, query) {
-      const response = await Detectors.getDetectors(this.state.user.authToken, query);
+    async fetchDetectors({ commit }) {
+      const response = await Detectors.getDetectors(this.state.user.authToken);
       if (response.error) {
         localStorage.removeItem("authToken");
         commit("setAuthToken", null);
         return;
       }
-      commit("setDetectors", response);
+      const detectorsList = response.detectors.split(',');
+      commit("setDetectors", detectorsList);
     },
 
     async fetchAnalysisCount({ commit }, query) {

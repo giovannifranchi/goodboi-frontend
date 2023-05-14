@@ -30,8 +30,8 @@
       </div>
       <div class="d-flex flex-wrap pb-5 pt-3 gy-4 gap-3" v-else>
           <DetectorComponent
-            :detectorName="detector.name"
-            :detectorCount="detector.count"
+            :detectorName="detector"
+            :rev-state="revState"
             @handleClick="handleDetector"
             @click="
               () => {isTablesBusy= true;
@@ -39,7 +39,7 @@
                 fetchAnalysisCount(this.currentDetector);
               }
             "
-            :class="currentDetector === detector.name ? 'active' : ''"
+            :class="currentDetector === detector ? 'active' : ''"
             class="flex-grow-1"
             v-for="(detector, index) in orderDetectors" :key="index"
           />
@@ -226,7 +226,7 @@ export default {
   },
 
   created() {
-    this.fetchDetectors(this.revState).then(() => (this.isDetectorBusy = false));
+    this.fetchDetectors().then(() => (this.isDetectorBusy = false));
     this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 }).then(()=>this.isTablesBusy = false);
     this.fetchAnalysisCount(this.currentDetector);
     this.fetchCompilationErrors();

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const Detectors = {
     getDetectors: async (token, query) => {
-        const endpoint = `${import.meta.env.VITE_BASE_URI}/api/detectors/${query}`;
+        const endpoint = `${import.meta.env.VITE_BASE_URI}/api/detectorslist`;
         const headers = {
             Accept: "application/json",
             "Content-Type": "multipart/form-data",
