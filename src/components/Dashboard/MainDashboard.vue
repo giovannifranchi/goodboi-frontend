@@ -79,7 +79,7 @@ export default {
 
   data() {
     return {
-      currentDetector: "unprotected-write",
+      currentDetector: "for-continue-increment",
       revStateFields: ['Unreviewed', 'FP', 'TP_Useless', 'TP_Niceish', 'TP_Explotable'],
       revState: 0,
       showAbort: false,

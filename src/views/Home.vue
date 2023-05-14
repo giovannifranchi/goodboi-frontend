@@ -7,6 +7,7 @@
 import { mapGetters, mapMutations } from 'vuex';
 import Autentication from '../components/Autentication.vue';
 import Dashborad from '../components/Dashborad.vue';
+import {RouterView} from 'vue-router';
 
 
     export default {
