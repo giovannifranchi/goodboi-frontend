@@ -34,8 +34,8 @@
             :detectorCount="detector.count"
             @handleClick="handleDetector"
             @click="
-              () => {
-                fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 });
+              () => {isTablesBusy= true;
+                fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 }).then(()=>isTablesBusy=false);
                 fetchAnalysisCount(this.currentDetector);
               }
             "
@@ -172,10 +172,6 @@ export default {
 
     handleDetector(detectorName) {
       this.currentDetector = detectorName;
-    },
-
-    logQuery(query) {
-      console.log(query.detector, query.revState);
     },
 
     addToPutted(id, revState) {
