@@ -11,7 +11,7 @@
       <button type="button" class="btn ms-blue w-auto d-flex align-items-center" @click="showTable" :class="{active: tableShow}">
         <h4 class="fw-light mb-0 d-flex">Flagged:
           <strong class="align-self-center" v-if="isFlaggedBusy"><AtomSpinner :size="20" color="#fff"/></strong> 
-          <strong v-else>{{ formatNumber(getFlaggedNumber )}}</strong>
+          <strong class="ms-2" v-else>{{ formatNumber(getFlaggedNumber )}}</strong>
         </h4>
       </button>
     </div>

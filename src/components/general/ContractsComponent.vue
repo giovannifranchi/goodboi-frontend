@@ -1,11 +1,19 @@
 <template>
   <div class="d-flex flex-column">
-    <h4 class="fw-light">Contracts: <strong>{{ formatContracts(contractsNumber) }}</strong></h4>
-    <h4 class="fw-light">Last 24h: {{ formatContracts(contracts24Number) }}</h4>
+    <h4 class="fw-light d-flex">Contracts: 
+      <AtomSpinner :size="20" color="#fff" class="align-self-center ms-2" v-if="!contractsNumber"/>
+      <strong class="ms-2" v-else>{{ formatContracts(contractsNumber) }}</strong>
+    </h4>
+    <h4 class="fw-light d-flex">Last 24h: 
+      <AtomSpinner :size="20" color="#fff" class="align-self-center ms-2" v-if="!contracts24Number"/>
+      <strong class="ms-2">{{ formatContracts(contracts24Number) }}</strong></h4>
   </div>
 </template>
 
 <script>
+import { AtomSpinner } from 'epic-spinners';
+
+
 export default {
   name: "ContractsComponent",
 
@@ -20,6 +28,8 @@ export default {
       required: true,
     },
   },
+
+  components: {AtomSpinner},
 
   methods: {
     formatContracts(number){
