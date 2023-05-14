@@ -153,15 +153,7 @@ export default {
 
     orderDetectors() {
       if (this.getDetectors) {
-        return this.getDetectors.sort((a, b) => {
-          if (a.name < b.name) {
-            return -1;
-          }
-          if (a.name > b.name) {
-            return 1;
-          }
-          return 0;
-        });
+        return this.getDetectors.sort();
       }
     },
   },
