@@ -57,11 +57,13 @@
         </div>
       </div>
     </div>
+    <AtomSpinner :size="100" color="#fff" v-if="isTablesBusy"/>
     <AnalyticsTableComponent
       :info="filteredTables"
       :currentDetector="currentDetector"
       @re-pass-id="addToPutted"
       class="analytics-table"
+      v-else
     />
   </main>
 
@@ -98,6 +100,7 @@ export default {
       revStateFields: ["Unreviewed", "FP", "TP_Useless", "TP_Niceish", "TP_Explotable"],
       revState: 0,
       isDetectorBusy: true,
+      isTablesBusy: true,
       showAbort: false,
       abortActive: false,
       lastclickedID: "",
@@ -228,7 +231,7 @@ export default {
 
   created() {
     this.fetchDetectors(this.revState).then(() => (this.isDetectorBusy = false));
-    this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 });
+    this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 }).then(()=>this.isTablesBusy = false);
     this.fetchAnalysisCount(this.currentDetector);
     this.fetchCompilationErrors();
   },
