@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import { useToast } from "vue-toastification";
 import axios from "axios";
+import login from "../../api/login";
 
 const toast = useToast();
 
@@ -104,26 +105,16 @@ const store = createStore({
     actions: {
 
       async  login({ commit }, query){  //TODO: refactoring required, all enpoints need to be in a .env file
-            const endpoint = "http://65.108.85.188:3000/api/login";
-            const headers = {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-            const payload = {
-                username: query.username,
-                password: query.password,
-            }
-            try {
-                const response = await axios.post(endpoint, payload, {headers})
-                if(response.data.error){
-                    throw new Error(response.data.error);
-                }
-                localStorage.setItem('authToken', response.data.token);
-                localStorage.setItem('username', payload.username)
-                commit('setAuthToken', response.data.token);
-                commit('setUsername', payload.username);
-            }catch(error){
-                toast.error(error.message);
-            }
+           try{
+              const response = await login(query);
+              if(response.error){
+                throw new Error(response.error);
+              }
+              localStorage.setItem('authToken', response.token);
+              commit('setAuthToken', response.token);
+           }catch(error){
+            toast.error(error.message);
+           }
         },
 
         
