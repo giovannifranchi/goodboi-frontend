@@ -1,6 +1,5 @@
 import { createStore } from "vuex";
 import { useToast } from "vue-toastification";
-import axios from "axios";
 import Login from "../../api/login";
 import Contracts from "../../api/Contracts";
 import CompilationErrors from "../../api/CompilationErrors";
