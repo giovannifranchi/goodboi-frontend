@@ -1,20 +1,28 @@
 <template>
   <div class="row py-5 position-relative overflow-hidden justify-content-between align-items-center">
-    <div class="col-4">
+    <div class="col-4" v-if="isContractsBusy || isContracts24Busy"><AtomSpinner :size="100" color="#fff"/></div>
+    <div class="col-4" v-else>
       <h3 class="text-center">{{ !tableShow ? 'Total' : 'Flagged' }}</h3>
       <VueApexCharts :type="'pie'" :series="getSeries" :options="getOptions" v-if="!tableShow"/>
       <VueApexCharts :type="'pie'" :series="getFlaggedSeries" :options="getOptions" v-else/>
     </div>
     <div class="col-4">
       <ContractsComponent :contractsNumber="getContractNumer" :contracts24Number="getContracts24" />
-      <button type="button" class="btn ms-blue w-auto d-flex align-items-center" @click="showTable" :class="{active: tableShow}"><h4 class="fw-light mb-0">Flagged: <strong>{{ formatNumber(getFlaggedNumber )}}</strong></h4></button>
+      <button type="button" class="btn ms-blue w-auto d-flex align-items-center" @click="showTable" :class="{active: tableShow}">
+        <h4 class="fw-light mb-0 d-flex">Flagged:
+          <strong class="align-self-center" v-if="isFlaggedBusy"><AtomSpinner :size="20" color="#fff"/></strong> 
+          <strong v-else>{{ formatNumber(getFlaggedNumber )}}</strong>
+        </h4>
+      </button>
     </div>
     <div class="col-4">
       <!-- Now it is always visible to make it hide put position absolute and add this :class="tableShow ? 'show' : 'hide'" -->
+      <AtomSpinner :size="100" color="#fff" v-if="!getCompilationErrors"/>
       <ErrorTableComponent
         :errorDetails="getCompilationErrors"
         :totalErrors="getTotalErrors"
         :errorsPercentage="getErrorsPercentage"
+        v-else
       />
     </div>
   </div>
@@ -24,16 +32,20 @@
 import VueApexCharts from "vue3-apexcharts";
 import ContractsComponent from "./ContractsComponent.vue";
 import ErrorTableComponent from "./ErrorTableComponent.vue";
+import { AtomSpinner } from 'epic-spinners';
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "StatsComponent",
 
-  components: { VueApexCharts, ContractsComponent, ErrorTableComponent },
+  components: { VueApexCharts, ContractsComponent, ErrorTableComponent, AtomSpinner },
 
   data() {
     return {
       tableShow: false,
+      isContractsBusy: true,
+      isContracts24Busy: true,
+      isFlaggedBusy: true
     };
   },
 
@@ -147,9 +159,9 @@ export default {
   },
 
   async created() {
-    await this.fetchContracts();
-    await this.fetchContracts24();
-    await this.fetchFlaggedContracts();
+    await this.fetchContracts().then(()=>this.isContractsBusy = false);
+    await this.fetchContracts24().then(()=>this.isContracts24Busy = false);
+    await this.fetchFlaggedContracts().then(()=>this.isFlaggedBusy = false);
   },
 };
 </script>
