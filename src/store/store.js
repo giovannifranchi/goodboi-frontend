@@ -3,6 +3,10 @@ import { useToast } from "vue-toastification";
 import axios from "axios";
 import login from "../../api/login";
 import Contracts from "../../api/Contracts";
+import CompilationErrors from "../../api/CompilationErrors";
+import Detectors from "../../api/Detectors";
+import AnalysisCount from "../../api/AnalysisCount";
+import Tables from "../../api/Tables";
 
 const toast = useToast();
 
@@ -96,9 +100,9 @@ const store = createStore({
       state.user.tables = value;
     },
   },
+
   actions: {
     async login({ commit }, query) {
-      //TODO: refactoring required, all enpoints need to be in a .env file
       try {
         const response = await login(query);
         if (response.error) {
@@ -122,107 +126,63 @@ const store = createStore({
     },
 
     async fetchContracts24({ commit }) {
-        const response = await Contracts.getContracts24(this.state.user.authToken);
-        if (response.error) {
-          localStorage.removeItem("authToken");
-          commit("setAuthToken", null);
-          return;
-        }
-        commit("setContracts24", response.count);
+      const response = await Contracts.getContracts24(this.state.user.authToken);
+      if (response.error) {
+        localStorage.removeItem("authToken");
+        commit("setAuthToken", null);
+        return;
+      }
+      commit("setContracts24", response.count);
     },
 
     async fetchFlaggedContracts({ commit }) {
-        const response = await Contracts.getFlaggedContracts(this.state.user.authToken);
-        if (response.error) {
-          localStorage.removeItem("authToken");
-          commit("setAuthToken", null);
-          return;
-        }
-        commit("setFlaggedContracts", response);
+      const response = await Contracts.getFlaggedContracts(this.state.user.authToken);
+      if (response.error) {
+        localStorage.removeItem("authToken");
+        commit("setAuthToken", null);
+        return;
+      }
+      commit("setFlaggedContracts", response);
     },
 
-    fetchCompilationErrors({ commit }) {
-      let compilationErrors = null;
-
-      const endpoint = "http://65.108.85.188:3000/api/compilationErrors";
-
-      const headers = {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-        authtoken: this.state.user.authToken,
-      };
-
-      axios.get(endpoint, { headers }).then((result) => {
-        if (result.data.error) {
-          localStorage.removeItem("authToken");
-          commit("setAuthToken", null);
-          return;
-        }
-        compilationErrors = result.data;
-        commit("setCompilationErrors", compilationErrors);
-      });
+    async fetchCompilationErrors({ commit }) {
+      const response = await CompilationErrors.getCompilationErrors(this.state.user.authToken);
+      if (response.error) {
+        localStorage.removeItem("authToken");
+        commit("setAuthToken", null);
+        return;
+      }
+      commit("setCompilationErrors", response);
     },
 
-    fetchDetectors({ commit }, query) {
-      let detectors = null;
-
-      const endpoint = `http://65.108.85.188:3000/api/detectors/${query}`;
-
-      const headers = {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-        authtoken: this.state.user.authToken,
-      };
-      axios.get(endpoint, { headers }).then((result) => {
-        if (result.data.error) {
-          localStorage.removeItem("authToken");
-          commit("setAuthToken", null);
-          return;
-        }
-        detectors = result.data;
-        commit("setDetectors", detectors);
-      });
+    async fetchDetectors({ commit }, query) {
+      const response = await Detectors.getDetectors(this.state.user.authToken, query);
+      if (response.error) {
+        localStorage.removeItem("authToken");
+        commit("setAuthToken", null);
+        return;
+      }
+      commit("setDetectors", response);
     },
 
-    fetchAnalysisCount({ commit }, query) {
-      const endpoint = `http://65.108.85.188:3000/api/analysisCount/${query}`;
-
-      const headers = {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-        authtoken: this.state.user.authToken,
-      };
-
-      axios.get(endpoint, { headers }).then((result) => {
-        if (result.data.error) {
-          localStorage.removeItem("authToken");
-          commit("setAuthToken", null);
-          return;
-        }
-        const analysisCount = result.data;
-        commit("setAnalysisCount", analysisCount);
-      });
+    async fetchAnalysisCount({ commit }, query) {
+      const response = await AnalysisCount.getAnalysisCount(this.state.user.authToken, query);
+      if (response.error) {
+        localStorage.removeItem("authToken");
+        commit("setAuthToken", null);
+        return;
+      }
+      commit("setAnalysisCount", response);
     },
 
-    fetchTables({ commit }, query) {
-      let tables = null;
-
-      const endpoint = `http://65.108.85.188:3000/api/hits/${query.detector}/${query.revState}/${query.offset}`;
-
-      const headers = {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-        authtoken: this.state.user.authToken,
-      };
-      axios.get(endpoint, { headers }).then((result) => {
-        if (result.data.error) {
-          localStorage.removeItem("authToken");
-          commit("setAuthToken", null);
-          return;
+    async fetchTables({ commit }, query) {
+        const response = await Tables.getTables(this.state.user.authToken, query);
+        if(response.error){
+            localStorage.removeItem('authToken');
+            commit('setAuthToken', null);
+            return;
         }
-        tables = result.data;
-        commit("setTables", tables);
-      });
+        commit('setTables', response);
     },
   },
 });
