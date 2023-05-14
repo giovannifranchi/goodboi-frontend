@@ -39,9 +39,11 @@
             :rev-state="revState"
             @handleClick="handleDetector"
             @click="
-              () => {isTablesBusy= true;
+              () => {
+                isTablesBusy = true;
+                isAnalysisBusy = true;
                 fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 }).then(()=>isTablesBusy=false);
-                fetchAnalysisCount(this.currentDetector);
+                fetchAnalysisCount(this.currentDetector).then(()=>isAnalysisBusy = false);
               }
             "
             :class="currentDetector === detector ? 'active' : ''"
