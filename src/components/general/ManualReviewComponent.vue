@@ -98,14 +98,6 @@ export default {
   color: #fff;
 }
 
-.btn-fp {
-  width: calc(100% / 2 - 5px);
-}
-
-.ms-margin {
-  margin-right: 5px;
-}
-
 .mid-blue {
   background-color: $tertiary-blue;
   color: #fff;

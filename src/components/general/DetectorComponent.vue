@@ -97,5 +97,8 @@ export default {
 .ms-btn {
   background-color: $secondary-blue;
   color: #fff;
+  &:hover {
+    border: 2px solid #404040;
+  }
 }
 </style>
