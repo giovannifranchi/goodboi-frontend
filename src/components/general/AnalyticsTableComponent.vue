@@ -211,7 +211,7 @@ export default {
     width: 5rem;
   }
   .set {
-    width: 110px;
+    width: 120px;
   }
 }
 </style>

@@ -119,8 +119,6 @@ export default {
     },
 
     getErrorsPercentage() {
-      //TODO refactor required
-      //TODO overall sui flaggati e non sul totale contracts
       let totalErrors = 0;
       if (!this.getCompilationErrors || this.getCompilationErrors.length === 0) {
         return 0;
