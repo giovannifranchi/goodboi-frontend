@@ -8,7 +8,7 @@
     </div>
     <div class="col-4">
       <ContractsComponent :contractsNumber="getContractNumer" :contracts24Number="getContracts24" />
-      <button type="button" class="btn ms-blue w-auto d-flex align-items-center" @click="showTable" :class="{active: tableShow}">
+      <button type="button" class="btn ms-blue w-auto d-flex align-items-center ms-btn" @click="showTable" :class="{active: tableShow}">
         <h4 class="fw-light mb-0 d-flex">Flagged:
           <strong class="align-self-center" v-if="isFlaggedBusy"><AtomSpinner :size="20" color="#fff"/></strong> 
           <strong class="ms-2" v-else>{{ formatNumber(getFlaggedNumber )}}</strong>
@@ -172,6 +172,12 @@ export default {
 .ms-blue{
   background-color: $secondary-blue;
   color: #fff;
+}
+
+.ms-btn {
+  &:hover{
+    border: 3px solid #404040;
+  }
 }
 .show {
   right: 0;
