@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-wrap align-items-center mx-1" v-if="!showTPButtons">
     <div class="d-flex justify-content-between w-100">
-      <button type="button" class="btn dark-red my-3 py-3 px-3" @click="putManualReview(1)">PF</button>
+      <button type="button" class="btn dark-red my-3 py-3 px-3" @click="putManualReview(1)">FP</button>
       <button type="button" class="btn dark-red my-3 py-3 px-3" @click="putManualReview(5)">IG</button>
     </div>
     <button type="button" class="btn blue w-100" @click="showTPButtons = true">TP</button>

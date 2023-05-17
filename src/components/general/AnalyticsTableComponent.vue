@@ -133,15 +133,12 @@ export default {
     },
 
     getColorByDate(date) {
-      const colorBad = "e47272";
-      const colorGood = "7ee472";
-      const colorRangeStart = parseInt(colorGood, 16);
-      const colorRangeEnd = parseInt(colorBad, 16);
-      let daysElapsed = Math.min(10, this.getDaysElapsed(date));
-
-      const colorValue = Math.round((colorRangeEnd - colorRangeStart) * (daysElapsed / 10) + colorRangeStart);
-      const colorHex = colorValue.toString(16).padStart(6, "0");
-      return `#${colorHex}`;
+      const colorBad = [190, 76, 76];
+      let daysElapsed = Math.min(30, this.getDaysElapsed(date));
+      if(daysElapsed <= 2)
+        return 'rgba(0,0,0,0)' // 0 opacity
+      let opacity = (daysElapsed / 30).toFixed(1)
+      return `rgba(${colorBad[0]},${colorBad[1]},${colorBad[2]},${opacity})`
     },
 
     getDaysElapsed(mysqlDatetime) {
