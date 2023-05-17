@@ -1,12 +1,22 @@
 <template>
-  <button type="button" class="btn ms-btn" @click="handleClick()" @mouseenter="showRefreash = true" @mouseleave="showRefreash = false">
+  <button
+    type="button"
+    class="btn ms-btn"
+    @click="handleClick()"
+    @mouseenter="showRefreash = true"
+    @mouseleave="showRefreash = false"
+  >
     {{ detectorName }}
     <span class="badge text-bg-secondary" v-if="isBusy"><AtomSpinner :size="20" color="#fff" /></span>
-    <span class="badge text-bg-secondary" v-else>
-      <template v-if="!showRefreash">{{ detectorCount }}</template>
-      <template v-else><font-awesome-icon icon="fa-solid fa-arrows-rotate" /></template>
-    </span>
-    <!-- <font-awesome-icon icon="fa-solid fa-arrows-rotate" /> -->
+    <a v-else @click.stop="()=>{
+      isBusy = true;
+      getDetectorCount();
+    }">
+      <span class="badge text-bg-secondary">
+        <template v-if="!showRefreash">{{ detectorCount }}</template>
+        <template v-else><font-awesome-icon icon="fa-solid fa-arrows-rotate" /></template>
+      </span>
+    </a>
   </button>
 </template>
 
@@ -14,9 +24,7 @@
 import { mapGetters } from "vuex";
 import { AtomSpinner } from "epic-spinners";
 import axios from "axios";
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
-
-
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 export default {
   name: "DetectorComponent",
@@ -65,13 +73,16 @@ export default {
       this.detectorCount = response.data.count;
       this.isBusy = false;
     },
+    greeting(){
+         console.log('refresh has been cliccked');
+    },
   },
 
   watch: {
-    revState(newValue){
+    revState(newValue) {
       this.isBusy = true;
       this.getDetectorCount();
-    }
+    },
   },
 
   created() {
