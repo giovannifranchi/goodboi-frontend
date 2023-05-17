@@ -8,7 +8,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr v-for="(error, index) in errorDetails" :key="index" class="ms-border">
+        <tr v-for="(error, index) in orderErrors" :key="index" class="ms-border">
             <td class="px-3 py-2">{{ error.error }}</td>
             <td class="px-3 py-2">{{ error.count }}</td>
         </tr>
@@ -44,6 +44,14 @@ export default {
       type: Number,
       required: true
     }
+  },
+
+  computed: {
+    orderErrors(){
+      if(this.errorDetails){
+        return this.errorDetails.sort((a, b)=> b.count - a.count);
+      }
+    },
   },
 
   methods: {
