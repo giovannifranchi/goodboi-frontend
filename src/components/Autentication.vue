@@ -27,13 +27,12 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import AutoTypingComponent from "./AutoTypingComponent.vue";
+
+
 
 
 export default {
   name: "Authentication",
-
-  components: { AutoTypingComponent },
 
   data() {
     return {

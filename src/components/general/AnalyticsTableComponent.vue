@@ -168,7 +168,7 @@ export default {
   table {
     width: 100%;
     table-layout: fixed;
-    background-color: #b2d5d5bf;
+    background-color: #dadada;
     border-color: $primary-blue;
     border-radius: 10px;
   }

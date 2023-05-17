@@ -1,8 +1,12 @@
 <template>
-  <button type="button" class="btn ms-btn" @click="handleClick()">
+  <button type="button" class="btn ms-btn" @click="handleClick()" @mouseenter="showRefreash = true" @mouseleave="showRefreash = false">
     {{ detectorName }}
     <span class="badge text-bg-secondary" v-if="isBusy"><AtomSpinner :size="20" color="#fff" /></span>
-    <span class="badge text-bg-secondary" v-else>{{ detectorCount }}</span>
+    <span class="badge text-bg-secondary" v-else>
+      <template v-if="!showRefreash">{{ detectorCount }}</template>
+      <template v-else><font-awesome-icon icon="fa-solid fa-arrows-rotate" /></template>
+    </span>
+    <!-- <font-awesome-icon icon="fa-solid fa-arrows-rotate" /> -->
   </button>
 </template>
 
@@ -10,6 +14,9 @@
 import { mapGetters } from "vuex";
 import { AtomSpinner } from "epic-spinners";
 import axios from "axios";
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+
+
 
 export default {
   name: "DetectorComponent",
@@ -18,6 +25,7 @@ export default {
     return {
       isBusy: true,
       detectorCount: null,
+      showRefreash: false,
     };
   },
 
@@ -33,7 +41,7 @@ export default {
     },
   },
 
-  components: { AtomSpinner },
+  components: { AtomSpinner, FontAwesomeIcon },
 
   emits: ["handle-click"],
 
