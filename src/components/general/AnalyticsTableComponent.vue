@@ -133,7 +133,7 @@ export default {
     },
 
     getColorByDate(date) {
-      const colorBad = [182, 40, 40];
+      const colorBad = [190, 76, 76];
       let daysElapsed = Math.min(30, this.getDaysElapsed(date));
       if(daysElapsed <= 2)
         return 'rgba(0,0,0,0)' // 0 opacity

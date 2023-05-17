@@ -120,7 +120,7 @@ export default {
 
     getErrorsPercentage() {
       let totalErrors = 0;
-      if (!this.getCompilationErrors || this.getCompilationErrors.length === 0) {
+      if (!this.getCompilationErrors || this.getCompilationErrors.length === 0 || !this.getFlaggedNumber) {
         return 0;
       } else {
         const errorsNumbers = this.getCompilationErrors.map((error) => error.count);
@@ -128,10 +128,10 @@ export default {
           totalErrors = 0;
         } else {
           totalErrors = errorsNumbers.reduce((acc, curr) => acc + curr);
-          if (this.getContractNumer === 0) {
+          if (this.getFlaggedNumber === 0) {
             return 0;
           } else {
-            return ((totalErrors * 100) / this.getContractNumer).toFixed(2);
+            return ((totalErrors * 100) / this.getFlaggedNumber).toFixed(2);
           }
         }
       }
