@@ -26,7 +26,7 @@ import {RouterView} from 'vue-router';
 
         watch: {
             getAuthToken(){
-                this.$router.push(this.getAuthToken ? '/dashboard' : '/');
+                this.$router.push(this.getAuthToken ? '/dashboard' : '/login');
             }
         },
 
@@ -35,6 +35,7 @@ import {RouterView} from 'vue-router';
             if(token){
                 this.setAuthToken(token);
             }
+            this.$router.push(this.getAuthToken ? '/dashboard' : '/login');
         }
 
     }

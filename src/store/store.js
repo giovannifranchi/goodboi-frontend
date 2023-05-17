@@ -110,6 +110,7 @@ const store = createStore({
         if (response.error) {
           throw new Error(response.error);
         }
+        localStorage.setItem('username', query.username);
         localStorage.setItem("authToken", response.token);
         commit("setAuthToken", response.token);
       } catch (error) {

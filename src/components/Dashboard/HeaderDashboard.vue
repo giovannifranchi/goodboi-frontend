@@ -13,23 +13,39 @@
       </a>
 
       <div class="user-container align-self-end">
-        <h6>{{ getName }}</h6>
+        <h6 v-if="!showLogout" @mouseenter="showLogout = true">{{ getName }}</h6>
+        <h6 v-else @mouseleave="showLogout = false"><a href="#" @click="logout">Logout</a></h6>
       </div>
     </div>
   </header>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "HeaderDashboard",
+
+  data(){
+    return {
+      showLogout: false,
+    }
+  },
 
   computed: {
     getName() {
       return localStorage.getItem("username");
     },
   },
+
+  methods: {
+    ...mapMutations(['setAuthToken']),
+
+    logout(){
+      localStorage.clear();
+      this.setAuthToken(null);
+    }
+  }
 };
 </script>
 
