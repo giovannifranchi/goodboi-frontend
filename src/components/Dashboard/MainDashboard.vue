@@ -5,7 +5,7 @@
       <!-- Rev State radios -->
 
       <h3>Revision State</h3>
-      <div class="row row-cols-5 w-50">
+      <div class="row row-cols-6 w-75 pt-3">
         <div class="col d-flex justify-content-center" v-for="(radio, index) in revStateFields" :key="index">
           <div class="form-check">
             <input
@@ -13,20 +13,22 @@
               type="radio"
               name="flexRadioDefault"
               :id="`rev${index}`"
-              :checked="index === 0"
+              :checked="radio.value === revState"
               v-model="revState"
-              :value="index"
-              @change="()=>{
-                revState = index;
-                isTablesBusy = true;
-                fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 }).then(()=>isTablesBusy=false);
-              }"
+              :value="radio.value"
+              @change="
+                () => {
+                  isTablesBusy = true;
+                  fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 }).then(
+                    () => (isTablesBusy = false)
+                  );
+                }
+              "
             />
-            <label class="form-check-label" :for="`rev${index}`">{{ radio }}</label>
+            <label class="form-check-label" :for="`rev${index}`">{{ radio.name }}</label>
           </div>
         </div>
       </div>
-
 
       <h3 class="pt-5">Detectors</h3>
 
@@ -34,29 +36,32 @@
         <AtomSpinner :size="200" color="#fff" />
       </div>
       <div class="d-flex flex-wrap pb-5 pt-3 gy-4 gap-3" v-else>
-          <DetectorComponent
-            :detectorName="detector"
-            :rev-state="revState"
-            @handleClick="handleDetector"
-            @click="
-              () => {
-                isTablesBusy = true;
-                isAnalysisBusy = true;
-                fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 }).then(()=>isTablesBusy=false);
-                fetchAnalysisCount(this.currentDetector).then(()=>isAnalysisBusy = false);
-              }
-            "
-            :class="currentDetector === detector ? 'active' : ''"
-            class="flex-grow-1"
-            v-for="(detector, index) in orderDetectors" :key="index"
-          />
+        <DetectorComponent
+          :detectorName="detector"
+          :rev-state="revState"
+          @handleClick="handleDetector"
+          @click="
+            () => {
+              isTablesBusy = true;
+              isAnalysisBusy = true;
+              fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 }).then(
+                () => (isTablesBusy = false)
+              );
+              fetchAnalysisCount(this.currentDetector).then(() => (isAnalysisBusy = false));
+            }
+          "
+          :class="currentDetector === detector ? 'active' : ''"
+          class="flex-grow-1"
+          v-for="(detector, index) in orderDetectors"
+          :key="index"
+        />
       </div>
 
       <div class="row justify-content-center">
         <div class="col-6 d-flex justify-content-between">
           <h5 class="fw-light">Detector: {{ currentDetector }}</h5>
           <!-- ADD: format number method -->
-          <h5 v-if="isAnalysisBusy"><AtomSpinner :size="50" color="#fff"/></h5>
+          <h5 v-if="isAnalysisBusy"><AtomSpinner :size="50" color="#fff" /></h5>
           <h5 class="fw-light" v-else>
             Analyzed: {{ getAnalysisCount ? formatNumber(getAnalysisCount.count) : "" }} ({{
               getDetectorAnalysisPercentage
@@ -65,7 +70,7 @@
         </div>
       </div>
     </div>
-    <AtomSpinner :size="100" color="#fff" v-if="isTablesBusy"/>
+    <AtomSpinner :size="100" color="#fff" v-if="isTablesBusy" />
     <AnalyticsTableComponent
       :info="filteredTables"
       :currentDetector="currentDetector"
@@ -105,7 +110,15 @@ export default {
   data() {
     return {
       currentDetector: "for-continue-increment",
-      revStateFields: ["Unreviewed", "FP", "TP_Useless", "TP_Niceish", "TP_Explotable"],
+      //ignored is like this because refactor on api is required
+      revStateFields: [
+        { name: "Unreviewed", value: 0 },
+        { name: "False Positive", value: 1 },
+        { name: "Ignored", value: 5 },
+        { name: "TP Useless", value: 2 },
+        { name: "TP Niceish", value: 3 },
+        { name: "TP Explotable", value: 4 },
+      ],
       revState: 0,
       isDetectorBusy: true,
       isTablesBusy: true,
@@ -127,7 +140,7 @@ export default {
       "getCompilationErrors",
     ]),
 
-    getRevState(){
+    getRevState() {
       return this.revState;
     },
 
@@ -231,8 +244,10 @@ export default {
 
   created() {
     this.fetchDetectors().then(() => (this.isDetectorBusy = false));
-    this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 }).then(()=>this.isTablesBusy = false);
-    this.fetchAnalysisCount(this.currentDetector).then(()=>this.isAnalysisBusy = false);
+    this.fetchTables({ detector: this.currentDetector, revState: this.revState, offset: 0 }).then(
+      () => (this.isTablesBusy = false)
+    );
+    this.fetchAnalysisCount(this.currentDetector).then(() => (this.isAnalysisBusy = false));
     this.fetchCompilationErrors();
   },
 };

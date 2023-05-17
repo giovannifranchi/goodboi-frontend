@@ -14,14 +14,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(row, index) in info" :key="index">
+        <tr v-for="(row, index) in info" :key="index" :class="lastRowCliccked === row.ID ? 'highlighted' : ''" @click.capture="lastRowCliccked = null">
           <td >{{ row.ID }}</td>
           <td >
             <div class="d-flex flex-column align-items-center">
-              <a :href="createScannerLink(row.chain, row.address, true)" target="_blank">
+              <a :href="createScannerLink(row.chain, row.address, true)" target="_blank" @click="lastRowCliccked = row.ID">
                 <img src="../../assets/img/visual-studio.png" alt="VSCode" class="ms-logo">
               </a>
-              <a :href="createScannerLink(row.chain, row.address)" target="_blank">
+              <a :href="createScannerLink(row.chain, row.address)" target="_blank" @click="lastRowCliccked = row.ID">
                 {{ renderContract(row.address) }}
               </a>
             </div>
@@ -81,6 +81,7 @@ export default {
   data(){
     return {
         showTPButtons: false,
+        lastRowCliccked: null,
     }
   },
 
@@ -184,6 +185,10 @@ export default {
     &.record {
       text-align: left;
     }
+  }
+
+  .highlighted{
+    background-color: aquamarine;
   }
   
   .id {
