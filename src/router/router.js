@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Authentication from '../components/Autentication.vue';
-import Dashboard from '../components/Dashborad.vue';
+import Dashboard from '../components/Dashboard.vue';
 import Home from '../views/Home.vue';
 import { mapGetters } from "vuex";
 import store from '../store/store';

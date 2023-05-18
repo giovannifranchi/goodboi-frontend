@@ -70,7 +70,9 @@
         </div>
       </div>
     </div>
-    <AtomSpinner :size="100" color="#fff" v-if="isTablesBusy" />
+    <div class="mt-5 mb-4 table-spinner-cont" v-if="isTablesBusy">
+      <AtomSpinner :size="100" color="#fff" />
+    </div>
     <AnalyticsTableComponent
       :info="filteredTables"
       :currentDetector="currentDetector"
@@ -279,5 +281,9 @@ export default {
 
 .analytics-table {
   margin: 0 15px;
+}
+
+.table-spinner-cont{
+  padding-left: calc(50% - 50px);
 }
 </style>

@@ -23,13 +23,22 @@
           <td>{{ row.ID }}</td>
           <td>
             <div class="d-flex flex-column align-items-center">
-              <a
-                :href="createScannerLink(row.chain, row.address, true)"
-                target="_blank"
-                @click="lastRowCliccked = row.ID"
-              >
-                <img src="../../assets/img/visual-studio.png" alt="VSCode" class="ms-logo" />
-              </a>
+              <div class="w-75 mb-3 d-flex flex-row justify-content-around">
+                <a
+                  :href="createScannerLink(row.chain, row.address, true)"
+                  target="_blank"
+                  @click="lastRowCliccked = row.ID"
+                >
+                  <img src="../../assets/img/visual-studio.png" alt="VSCode" class="ms-logo" />
+                </a>
+                <a
+                  :href="createScannerLink(row.chain, row.address)"
+                  target="_blank"
+                  @click="lastRowCliccked = row.ID"
+                >
+                  <img src="../../assets/img/etherscan-logo.png" alt="Etherscan" class="ms-logo" />
+                </a>
+              </div>
               <a :href="createScannerLink(row.chain, row.address)" target="_blank" @click="lastRowCliccked = row.ID">
                 {{ renderContract(row.address) }}
               </a>
@@ -186,6 +195,7 @@ export default {
 .table-wrapper {
   a {
     color: inherit;
+    text-decoration: none;
   }
 
   table {
@@ -211,7 +221,7 @@ export default {
   }
 
   .highlighted {
-    background-color: aquamarine;
+    background-color: rgba(223,255,0,0.12);
   }
 
   .id {

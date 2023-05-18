@@ -7,7 +7,7 @@
     @mouseleave="showRefreash = false"
   >
     {{ detectorName }}
-    <span class="badge text-bg-secondary" v-if="isBusy"><AtomSpinner :size="20" color="#fff" /></span>
+    <span class="badge text-bg-secondary" v-if="isBusy"><AtomSpinner :size="12" color="#fff" /></span>
     <a v-else @click.stop="()=>{
       isBusy = true;
       getDetectorCount();
