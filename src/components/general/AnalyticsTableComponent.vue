@@ -45,7 +45,7 @@
             </div>
           </td>
           <td>{{ handleChain(row.chain) }}</td>
-          <td class="record" v-html="reportHighlight(row.report)"></td>
+          <td class="record" v-html="reportHighlight(cleanNewLines(row.report))"></td>
           <td>
             <div class="d-flex flex-column">
               <span v-html="getPF(row.PF, row.RPF)"></span>
@@ -139,6 +139,10 @@ export default {
         default:
           return "";
       }
+    },
+
+    cleanNewLines(report){
+      return report.replace(/\n/g, "<br>")
     },
 
     getColorByDate(date) {
