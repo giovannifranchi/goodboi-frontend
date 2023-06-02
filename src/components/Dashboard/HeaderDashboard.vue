@@ -1,20 +1,16 @@
 <template>
   <header>
     <div class="container py-3 gap-3 d-flex justify-content-between align-items-center">
-      <a class="navbar-brand  d-flex" >
-        <img
-          src="../../assets/img/doggo.svg"
-          alt="Logo"
-          width="100"
-
-          class="d-inline-block align-text-center pb-2"
-        />
+      <a class="navbar-brand d-flex">
+        <img src="../../assets/img/doggo.svg" alt="Logo" width="100" class="d-inline-block align-text-center pb-2" />
         <h3 class="align-self-end">GoodBoi</h3>
       </a>
 
       <div class="user-container align-self-end">
         <h6 v-if="!showLogout" @mouseenter="showLogout = true">{{ getName }}</h6>
-        <h6 v-else @mouseleave="showLogout = false"><a href="#" @click="logout">Logout</a></h6>
+        <h6 v-else @mouseleave="showLogout = false">
+          <a href="#" class="text-decoration-none text-reset" @click="logout">Logout</a>
+        </h6>
       </div>
     </div>
   </header>
@@ -26,10 +22,10 @@ import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "HeaderDashboard",
 
-  data(){
+  data() {
     return {
       showLogout: false,
-    }
+    };
   },
 
   computed: {
@@ -39,13 +35,13 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['setAuthToken']),
+    ...mapMutations(["setAuthToken"]),
 
-    logout(){
+    logout() {
       localStorage.clear();
       this.setAuthToken(null);
-    }
-  }
+    },
+  },
 };
 </script>
 

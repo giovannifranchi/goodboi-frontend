@@ -50,11 +50,6 @@ export default {
     ...mapActions(['login']),
     ...mapMutations(['setAuthToken']),
 
-    logintry(query){ //TODO: refactoring required for semantic names and optimization
-      
-      this.login(query);
-    }
-
   },
 };
 </script>
