@@ -11,6 +11,8 @@ import Tables from "../../api/Tables";
 import Analysis from "../api/Analysis";
 import Detector from "../api/Detector";
 import Contract from "../api/Contract";
+import Error from "../api/Error";
+import Table from "../api/Table";
 
 const toast = useToast();
 
@@ -112,6 +114,7 @@ const store = createStore({
         if (response.error) {
           throw new Error(response.error);
         }
+        localStorage.clear();
         localStorage.setItem("username", query.username);
         localStorage.setItem("authToken", response.token);
         commit("setAuthToken", response.token);
@@ -151,7 +154,7 @@ const store = createStore({
     },
 
     async fetchCompilationErrors({ commit }) {
-      const response = await CompilationErrors.getCompilationErrors(this.state.user.authToken);
+      const response = await Error.get(this.state.user.authToken);
       if (response.error) {
         localStorage.removeItem("authToken");
         commit("setAuthToken", null);
@@ -182,7 +185,7 @@ const store = createStore({
     },
 
     async fetchTables({ commit }, query) {
-      const response = await Tables.getTables(this.state.user.authToken, query);
+      const response = await Table.get(this.state.user.authToken, query);
       if (response.error) {
         localStorage.removeItem("authToken");
         commit("setAuthToken", null);
