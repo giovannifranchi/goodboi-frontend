@@ -2,8 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Authentication from '../components/Autentication.vue';
 import Dashboard from '../components/Dashborad.vue';
 import Home from '../views/Home.vue';
-import { mapGetters } from "vuex";
-import store from '../store/store';
+
 
 const routes = [
     {
@@ -24,20 +23,6 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
-
-// router.beforeEach((to, from, next)=>{
-//     const authToken = store.getters.getAuthToken;
-//     if(to.path === '/dashboard' && !authToken){
-//         next('/login');
-//     }else  {
-//         next();
-//     }
-//     if(to.path === '/login' && authToken){
-//         next('/dashboard');
-//     }else{
-//         next();
-//     }
-// })
 
 
 export default router;
