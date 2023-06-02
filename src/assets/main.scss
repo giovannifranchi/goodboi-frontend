@@ -2,3 +2,7 @@
 @use './partials/reset' as *;
 @use './partials/variables' as *;
 
+body {
+    color: #e5e3e3;
+    background-color: $primary-blue;
+}
