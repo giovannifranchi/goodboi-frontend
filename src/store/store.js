@@ -8,7 +8,7 @@ import AnalysisCount from "../../api/AnalysisCount";
 import Tables from "../../api/Tables";
 
 // this is a try
-
+import Analysis from "../api/Analysis";
 import Detector from "../api/Detector";
 
 const toast = useToast();
@@ -181,15 +181,26 @@ const store = createStore({
       commit('setDetectors', detectorsList);
     },
 
-    async fetchAnalysisCount({ commit }, query) {
-      const response = await AnalysisCount.getAnalysisCount(this.state.user.authToken, query);
-      if (response.error) {
+    // async fetchAnalysisCount({ commit }, query) {
+    //   const response = await AnalysisCount.getAnalysisCount(this.state.user.authToken, query);
+    //   if (response.error) {
+    //     localStorage.removeItem("authToken");
+    //     commit("setAuthToken", null);
+    //     return;
+    //   }
+    //   commit("setAnalysisCount", response);
+    // },
+
+    async fetchAnalysisCount({commit}, currentDetector){
+      const response = await Analysis.getAnalysisCount(this.state.user.authToken, currentDetector);
+      if(response.error){
         localStorage.removeItem("authToken");
         commit("setAuthToken", null);
         return;
       }
-      commit("setAnalysisCount", response);
+      commit('setAnalysisCount', response.count);
     },
+
 
     async fetchTables({ commit }, query) {
       const response = await Tables.getTables(this.state.user.authToken, query);

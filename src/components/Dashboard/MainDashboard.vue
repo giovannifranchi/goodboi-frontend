@@ -63,7 +63,7 @@
           <!-- ADD: format number method -->
           <h5 v-if="isAnalysisBusy"><AtomSpinner :size="50" color="#fff" /></h5>
           <h5 class="fw-light" v-else>
-            Analyzed: {{ getAnalysisCount ? formatNumber(getAnalysisCount.count) : "" }} ({{
+            Analyzed: {{ getAnalysisCount ? formatNumber(getAnalysisCount) : "" }} ({{
               getDetectorAnalysisPercentage
             }}%)
           </h5>
@@ -173,7 +173,7 @@ export default {
     getDetectorAnalysisPercentage() {
       if (this.getFlaggedContracts && this.getCompilationErrors && this.getAnalysisCount) {
         const totalErrors = this.getTotalErrors + this.getTotalFlagged;
-        return ((this.getAnalysisCount.count * 100) / totalErrors).toFixed(2);
+        return ((this.getAnalysisCount * 100) / totalErrors).toFixed(2);
       }
     },
 
