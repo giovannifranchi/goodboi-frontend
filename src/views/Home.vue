@@ -45,15 +45,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .fade-enter-active,
-// .fade-leave-active {
-//   transition: opacity 1.5s ease-in;
-// }
-
-// .fade-enter-from,
-// .fade-leave-to {
-//   opacity: 0;
-// }
 
 .bounce-enter-active {
   animation: bounce-in 1s;
