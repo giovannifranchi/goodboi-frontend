@@ -1,11 +1,6 @@
 import { createStore } from "vuex";
 import { useToast } from "vue-toastification";
 import Login from "../../api/login";
-import Contracts from "../../api/Contracts";
-import CompilationErrors from "../../api/CompilationErrors";
-import Detectors from "../../api/Detectors";
-import AnalysisCount from "../../api/AnalysisCount";
-import Tables from "../../api/Tables";
 
 // this is a try
 import Analysis from "../api/Analysis";
@@ -125,74 +120,45 @@ const store = createStore({
 
     async fetchContracts({ commit }) {
       const response = await Contract.get(this.state.user.authToken);
-      if (response.error) {
-        localStorage.removeItem("authToken");
-        commit("setAuthToken", null);
-        return;
-      }
-      commit('setContracts', response);
+      response.error ? this.dispatch('cleanToken') : commit('setContracts', response);
     },
 
     async fetchContracts24({ commit }) {
       const response = await Contract.get24(this.state.user.authToken);
-      if (response.error) {
-        localStorage.removeItem("authToken");
-        commit("setAuthToken", null);
-        return;
-      }
-      commit('setContracts24', response.count);
+      response.error ? this.dispatch('cleanToken') : commit('setContracts24', response.count);
     },
 
     async fetchFlaggedContracts({ commit }) {
       const response = await Contract.getFlagged(this.state.user.authToken);
-      if (response.error) {
-        localStorage.removeItem("authToken");
-        commit("setAuthToken", null);
-        return;
-      }
-      commit('setFlaggedContracts', response);
+      response.error ? this.dispatch('cleanToken') : commit('setFlaggedContracts', response);
     },
 
     async fetchCompilationErrors({ commit }) {
       const response = await Error.get(this.state.user.authToken);
-      if (response.error) {
-        localStorage.removeItem("authToken");
-        commit("setAuthToken", null);
-        return;
-      }
-      commit("setCompilationErrors", response);
+      response.error ? this.dispatch('cleanToken') : commit("setCompilationErrors", response);
     },
 
     async fetchDetectors({ commit }) {
       const response = await Detector.getDetectorList(this.state.user.authToken);
-      if (response.error) {
-        localStorage.removeItem("authToken");
-        commit("setAuthToken", null);
-        return;
-      }
-      const detectorsList = response.detectors.split(",");
-      commit("setDetectors", detectorsList);
+      if(response.error) return this.dispatch('cleanToken');
+      const detectorsList = response.detectors.split(',');
+      commit("setDetectors", detectorsList);;
     },
 
     async fetchAnalysisCount({ commit }, currentDetector) {
       const response = await Analysis.getAnalysisCount(this.state.user.authToken, currentDetector);
-      if (response.error) {
-        localStorage.removeItem("authToken");
-        commit("setAuthToken", null);
-        return;
-      }
-      commit("setAnalysisCount", response.count);
+      response.error ? this.dispatch('cleanToken') : commit("setAnalysisCount", response.count);
     },
 
     async fetchTables({ commit }, query) {
       const response = await Table.get(this.state.user.authToken, query);
-      if (response.error) {
-        localStorage.removeItem("authToken");
-        commit("setAuthToken", null);
-        return;
-      }
-      commit("setTables", response);
+      response.error ? this.dispatch('cleanToken') : commit("setTables", response);
     },
+
+    cleanToken({commit}){
+      localStorage.clear();
+      commit("setAuthToken", null);
+    }
   },
 });
 
