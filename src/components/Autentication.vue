@@ -1,6 +1,5 @@
 <template>
   <div class="d-flex align-items-center justify-content-center wrapper flex-column py-5">
-    <!-- <AutoTypingComponent /> -->
     <div class="w-25">
       <img src="../assets/img/doggo.svg" alt="logo" class="img-fluid">
     </div>
@@ -20,7 +19,7 @@
         <label for="exampleInputPassword1" class="form-label">Password</label>
         <input type="password" class="form-control" id="exampleInputPassword1" v-model="query.password" />
       </div>
-      <button type="submit" class="btn btn-primary">login</button>
+      <button type="submit" class="btn ms-button w-100 mt-3">Login</button>
     </form>
   </div>
 </template>
@@ -65,5 +64,13 @@ export default {
 .wrapper {
   height: 100vh;
   background-color: $primary-blue;
+  .ms-button {
+    background-color: $yellow;
+    color: $table-color;
+    &:hover{
+      background-color: lighten($color: $yellow, $amount: 10%);
+      color: $table-color;
+    }
+  }
 }
 </style>

@@ -1,17 +1,14 @@
 <template>
- <RouterView/>
+  <RouterView />
 </template>
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import Autentication from "../components/Autentication.vue";
-import Dashborad from "../components/Dashborad.vue";
+
 import { RouterView } from "vue-router";
 
 export default {
   name: "Home",
-
-  components: { Autentication, Dashborad },
 
   data() {
     return {
@@ -34,13 +31,11 @@ export default {
   },
 
   created() {
-    
-    const token = localStorage.getItem('authToken');
-    if(token){
-        this.setAuthToken(token);
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      this.setAuthToken(token);
     }
-    this.$router.push(this.getAuthToken ? '/dashboard' : '/login');
-
+    this.$router.push(this.getAuthToken ? "/dashboard" : "/login");
   },
 };
 </script>
