@@ -71,7 +71,7 @@ export default {
 <style lang="scss" scoped>
 
 .ms-table{
-  // background-color: rgb(157, 156, 156);
+
   background-color: transparent;
   width: 100%;
   
