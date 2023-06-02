@@ -4,7 +4,7 @@
       <img src="../assets/img/doggo.svg" alt="logo" class="img-fluid">
     </div>
     <h1 class="mb-5">GoodBoi</h1>
-    <form @submit.prevent="logintry(query)">
+    <form @submit.prevent="login(query)">
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Email address</label>
         <input
