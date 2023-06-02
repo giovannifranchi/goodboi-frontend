@@ -25,7 +25,7 @@ import { mapGetters } from "vuex";
 import { AtomSpinner } from "epic-spinners";
 import Detector from "../../api/Detector";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import Ajax from "../../api/Ajax";
+
 
 export default {
   name: "DetectorComponent",
@@ -64,7 +64,7 @@ export default {
     },
 
     async getDetectorCount() {
-      const response = await Detector.getDetectorCount(this.getAuthToken, this.detectorName, this.revState);
+      const response = await Detector.getCount(this.getAuthToken, this.detectorName, this.revState);
       this.detectorCount = response.count;
       this.isBusy = false;
     },

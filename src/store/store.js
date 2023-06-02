@@ -139,14 +139,14 @@ const store = createStore({
     },
 
     async fetchDetectors({ commit }) {
-      const response = await Detector.getDetectorList(this.state.user.authToken);
+      const response = await Detector.getList(this.state.user.authToken);
       if(response.error) return this.dispatch('cleanToken');
       const detectorsList = response.detectors.split(',');
       commit("setDetectors", detectorsList);;
     },
 
     async fetchAnalysisCount({ commit }, currentDetector) {
-      const response = await Analysis.getAnalysisCount(this.state.user.authToken, currentDetector);
+      const response = await Analysis.get(this.state.user.authToken, currentDetector);
       response.error ? this.dispatch('cleanToken') : commit("setAnalysisCount", response.count);
     },
 

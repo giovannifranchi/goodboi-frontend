@@ -2,11 +2,11 @@ import Ajax from "./Ajax";
 
 
 const Detector = {
-    getDetectorList: (token)=> {
+    getList: (token)=> {
         return Ajax.get('/detectorslist', {token});
     },
 
-    getDetectorCount: (token, detectorName, revState)=>{
+    getCount: (token, detectorName, revState)=>{
         return Ajax.get(`/hitscount/${detectorName}/${revState}`, {token});
     }
 }

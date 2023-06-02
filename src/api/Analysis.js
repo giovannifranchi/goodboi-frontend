@@ -1,7 +1,7 @@
 import Ajax from "./Ajax";
 
 const Analysis = {
-    getAnalysisCount: (token, currentDetector)=>{
+    get: (token, currentDetector)=>{
         return Ajax.get(`/analysiscount/${currentDetector}`, {token});
     }
 }

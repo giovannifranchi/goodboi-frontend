@@ -16,7 +16,6 @@
       </button>
     </div>
     <div class="col-4">
-      <!-- Now it is always visible to make it hide put position absolute and add this :class="tableShow ? 'show' : 'hide'" -->
       <AtomSpinner :size="100" color="#fff" v-if="!getCompilationErrors"/>
       <ErrorTableComponent
         :errorDetails="getCompilationErrors"
@@ -156,10 +155,10 @@ export default {
     }
   },
 
-  async created() {
-    await this.fetchContracts().then(()=>this.isContractsBusy = false);
-    await this.fetchContracts24().then(()=>this.isContracts24Busy = false);
-    await this.fetchFlaggedContracts().then(()=>this.isFlaggedBusy = false);
+created() {
+    this.fetchContracts().then(()=>this.isContractsBusy = false);
+    this.fetchContracts24().then(()=>this.isContracts24Busy = false);
+    this.fetchFlaggedContracts().then(()=>this.isFlaggedBusy = false);
   },
 };
 </script>
