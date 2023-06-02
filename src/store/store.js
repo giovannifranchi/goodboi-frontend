@@ -1,8 +1,9 @@
 import { createStore } from "vuex";
 import { useToast } from "vue-toastification";
-import Login from "../../api/login";
 
-// this is a try
+
+
+import Auth from "../api/Auth";
 import Analysis from "../api/Analysis";
 import Detector from "../api/Detector";
 import Contract from "../api/Contract";
@@ -105,11 +106,10 @@ const store = createStore({
   actions: {
     async login({ commit }, query) {
       try {
-        const response = await Login.access(query);
+        const response = await Auth.login(query);
         if (response.error) {
           throw new Error(response.error);
         }
-        localStorage.clear();
         localStorage.setItem("username", query.username);
         localStorage.setItem("authToken", response.token);
         commit("setAuthToken", response.token);
@@ -158,7 +158,7 @@ const store = createStore({
     cleanToken({commit}){
       localStorage.clear();
       commit("setAuthToken", null);
-    }
+    },
   },
 });
 
