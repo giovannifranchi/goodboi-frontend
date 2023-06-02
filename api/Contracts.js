@@ -8,7 +8,7 @@ const Contracts = {
             "Content-Type": "multipart/form-data",
             'authtoken': token,
         };
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URI}/api/${endpoint}`, {headers});
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/${endpoint}`, {headers});
         return response.data;
     },
 

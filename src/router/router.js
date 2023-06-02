@@ -25,19 +25,19 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach((to, from, next)=>{
-    const authToken = store.getters.getAuthToken;
-    if(to.path === '/dashboard' && !authToken){
-        next('/login');
-    }else  {
-        next();
-    }
-    if(to.path === '/login' && authToken){
-        next('/dashboard');
-    }else{
-        next();
-    }
-})
+// router.beforeEach((to, from, next)=>{
+//     const authToken = store.getters.getAuthToken;
+//     if(to.path === '/dashboard' && !authToken){
+//         next('/login');
+//     }else  {
+//         next();
+//     }
+//     if(to.path === '/login' && authToken){
+//         next('/dashboard');
+//     }else{
+//         next();
+//     }
+// })
 
 
 export default router;

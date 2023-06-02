@@ -2,7 +2,7 @@ import axios from "axios";
 
 const Tables = {
     getTables: async(token, query)=>{
-        const endpoint = `${import.meta.env.VITE_BASE_URI}/api/hits/${query.detector}/${query.revState}/${query.offset}`;
+        const endpoint = `${import.meta.env.VITE_BASE_URL}/hits/${query.detector}/${query.revState}/${query.offset}`;
         const headers = {
             Accept: "application/json",
             "Content-Type": "multipart/form-data",

@@ -7,11 +7,14 @@ import Detectors from "../../api/Detectors";
 import AnalysisCount from "../../api/AnalysisCount";
 import Tables from "../../api/Tables";
 
+// this is a try
+
+import Detector from "../api/Detector";
+
 const toast = useToast();
 
 const store = createStore({
   state: {
-
     user: {
       username: null,
       authToken: null,
@@ -26,7 +29,6 @@ const store = createStore({
   },
 
   getters: {
-
     getUsername(state) {
       return state.user.username;
     },
@@ -65,7 +67,6 @@ const store = createStore({
   },
 
   mutations: {
-
     setUsername(state, value) {
       state.user.username = value;
     },
@@ -110,7 +111,7 @@ const store = createStore({
         if (response.error) {
           throw new Error(response.error);
         }
-        localStorage.setItem('username', query.username);
+        localStorage.setItem("username", query.username);
         localStorage.setItem("authToken", response.token);
         commit("setAuthToken", response.token);
       } catch (error) {
@@ -158,15 +159,26 @@ const store = createStore({
       commit("setCompilationErrors", response);
     },
 
+    // async fetchDetectors({ commit }) {
+    //   const response = await Detectors.getDetectors(this.state.user.authToken);
+    //   if (response.error) {
+    //     localStorage.removeItem("authToken");
+    //     commit("setAuthToken", null);
+    //     return;
+    //   }
+    //   const detectorsList = response.detectors.split(',');
+    //   commit("setDetectors", detectorsList);
+    // },
+
     async fetchDetectors({ commit }) {
-      const response = await Detectors.getDetectors(this.state.user.authToken);
+      const response = await Detector.getDetectorList(this.state.user.authToken);
       if (response.error) {
         localStorage.removeItem("authToken");
         commit("setAuthToken", null);
         return;
       }
       const detectorsList = response.detectors.split(',');
-      commit("setDetectors", detectorsList);
+      commit('setDetectors', detectorsList);
     },
 
     async fetchAnalysisCount({ commit }, query) {
@@ -180,13 +192,13 @@ const store = createStore({
     },
 
     async fetchTables({ commit }, query) {
-        const response = await Tables.getTables(this.state.user.authToken, query);
-        if(response.error){
-            localStorage.removeItem('authToken');
-            commit('setAuthToken', null);
-            return;
-        }
-        commit('setTables', response);
+      const response = await Tables.getTables(this.state.user.authToken, query);
+      if (response.error) {
+        localStorage.removeItem("authToken");
+        commit("setAuthToken", null);
+        return;
+      }
+      commit("setTables", response);
     },
   },
 });

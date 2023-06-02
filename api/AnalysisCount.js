@@ -2,7 +2,7 @@ import axios from "axios";
 
 const AnalysisCount = {
     getAnalysisCount: async(token, query)=>{
-        const endpoint = `${import.meta.env.VITE_BASE_URI}/api/analysisCount/${query}`;
+        const endpoint = `${import.meta.env.VITE_BASE_URL}/analysisCount/${query}`;
         const headers = {
             Accept: "application/json",
             "Content-Type": "multipart/form-data",

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const Login = {
   access: async(query)=>{
-    const endpoint = `${import.meta.env.VITE_BASE_URI}/api/login`;
+    const endpoint = `${import.meta.env.VITE_BASE_URL}/login`;
     const headers = {
       "Content-Type": "application/x-www-form-urlencoded",
     };

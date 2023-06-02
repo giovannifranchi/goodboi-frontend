@@ -23,8 +23,9 @@
 <script>
 import { mapGetters } from "vuex";
 import { AtomSpinner } from "epic-spinners";
-import axios from "axios";
+import Detector from "../../api/Detector";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import Ajax from "../../api/Ajax";
 
 export default {
   name: "DetectorComponent",
@@ -63,18 +64,9 @@ export default {
     },
 
     async getDetectorCount() {
-      const endpoint = `${import.meta.env.VITE_BASE_URI}/api/hitscount/${this.detectorName}/${this.revState}`;
-      const headers = {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-        authtoken: this.getAuthToken,
-      };
-      const response = await axios.get(endpoint, { headers });
-      this.detectorCount = response.data.count;
+      const response = await Detector.getDetectorCount(this.getAuthToken, this.detectorName, this.revState);
+      this.detectorCount = response.count;
       this.isBusy = false;
-    },
-    greeting(){
-         console.log('refresh has been cliccked');
     },
   },
 

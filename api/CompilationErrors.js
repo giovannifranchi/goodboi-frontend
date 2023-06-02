@@ -2,7 +2,7 @@ import axios from "axios";
 
 const CompilationErrors = {
     getCompilationErrors: async (token)=>{
-        const endpoint = `${import.meta.env.VITE_BASE_URI}/api/compilationErrors`;
+        const endpoint = `${import.meta.env.VITE_BASE_URL}/compilationErrors`;
         const headers = {
             Accept: "application/json",
             "Content-Type": "multipart/form-data",
