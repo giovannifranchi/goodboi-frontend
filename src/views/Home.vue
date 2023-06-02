@@ -9,7 +9,9 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 
+
 import { RouterView } from "vue-router";
+
 
 export default {
   name: "Home",
