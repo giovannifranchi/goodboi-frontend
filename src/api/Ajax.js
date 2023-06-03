@@ -19,8 +19,11 @@ const ajaxRequest = async(config)=> {
             break;
         case 'POST':
             config.headers = Header.post;
-            console.log('post switch entered');
-            break;        
+            break;
+        case 'PUT':
+            Header.put.authtoken = config.token;
+            config.headers = Header.put;
+            break;
     }
 
 
@@ -46,6 +49,18 @@ const Ajax = {
                 url: endpoint,
                 method: 'POST',
                 data: params
+            }
+        }
+        return ajaxRequest(config);
+    },
+
+    put: (endpoint, params, config =  {})=>{
+        config = {
+            ...config,
+            ...{
+                url: endpoint,
+                method: 'PUT',
+                data: params,
             }
         }
         return ajaxRequest(config);

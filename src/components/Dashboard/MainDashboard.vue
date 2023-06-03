@@ -98,6 +98,7 @@
 
 <script>
 import axios from "axios";
+import Review from '../../api/Review';
 import StatsComponentVue from "../general/StatsComponent.vue";
 import DetectorComponent from "../general/DetectorComponent.vue";
 import AnalyticsTableComponent from "../general/AnalyticsTableComponent.vue";
@@ -225,23 +226,29 @@ export default {
       }
     },
 
-    putCall(id, revState) {
-      const endpoint = `http://65.108.85.188:3000/api/manualRevision/${id}/${this.currentDetector}/${revState}`;
+    // putCall(id, revState) {
+    //   const endpoint = `http://65.108.85.188:3000/api/manualRevision/${id}/${this.currentDetector}/${revState}`;
 
-      const headers = {
-        Accept: "application/json",
-        authtoken: this.getAuthToken,
-      };
+    //   const headers = {
+    //     Accept: "application/json",
+    //     authtoken: this.getAuthToken,
+    //   };
 
-      axios.put(endpoint, null, { headers }).then((res) => {
-        if (res.data.error === undefined || res.data.error === null) {
-          console.log("put success");
-        } else {
-          console.log(res.data.error);
-        }
-        this.showAbort = false;
-      });
-    },
+    //   axios.put(endpoint, null, { headers }).then((res) => {
+    //     if (res.data.error === undefined || res.data.error === null) {
+    //       console.log("put success");
+    //     } else {
+    //       console.log(res.data.error);
+    //     }
+    //     this.showAbort = false;
+    //   });
+    // },
+
+    async putCall(id, revState){
+      const response = await Review.put({id, currentDetector: this.currentDetector, revState}, this.getAuthToken);
+      response.error ? console.log(response.error) : console.log("put success");
+      this.showAbort =  false;
+    }
   },
 
   created() {

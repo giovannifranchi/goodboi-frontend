@@ -9,6 +9,11 @@ const Header = {
 
     post: {
         "Content-Type": "application/x-www-form-urlencoded",
+    },
+
+    put: {
+        'Accept': "application/json", 
+        'authtoken': null,
     }
 
 }
