@@ -54,13 +54,12 @@ const Ajax = {
         return ajaxRequest(config);
     },
 
-    put: (endpoint, params, config =  {})=>{
+    put: (endpoint, config =  {})=>{
         config = {
             ...config,
             ...{
                 url: endpoint,
                 method: 'PUT',
-                data: params,
             }
         }
         return ajaxRequest(config);
